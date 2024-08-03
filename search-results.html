@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Vault</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <div class="container mx-auto">
+        <form id="search-form" action="">
+            <input type="text" class="border-2"/>
+            <button type="submit" class="bg-gray-300">Search</button>
+        </form>
+
+        <!--Filter button section-->
+        <div class="flex items-center space-x-3 mt-5">
+            <button class="bg-blue-400 p-2" id="type-button" value="movie">Movie</button>
+            <button class="bg-blue-400 p-2" id="type-button" value="tv">TV Show</button>
+            <button class="bg-blue-400 p-2" id="type-button" value="person">People</button>
+        </div>
+
+        <div>search results</div>
+
+        <!--Search results wrapper-->
+        <div id="search-results-wrapper" class="flex flex-col">
+            
+        </div>
+
+        <!--Pagination buttons wrapper-->
+        <div class="flex items-center space-x-2" id="pagination-buttons-wrapper">
+
+        </div>
+    </div>
+
+    <script type="module" src="js/search-results.js"></script>
+</body>
+</html>
