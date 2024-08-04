@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Vault</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body class="flex flex-col container mx-auto h-[100vh]">
+    <!--Navbar-->
+    <nav class="flex justify-between items center">
+        <!--Left side-->
+        <a href="/">Movie Vault</a>
+
+        <!--Right Side-->
+        <div class="flex items-center space-x-5">
+            <a href="login.html">Log In</a>
+            <a href="register.html">Register</a>
+        </div>
+    </nav>
+
+    <div class="flex flex-1 items-center justify-center">
+        <form id="register-form" action="">
+            <div class="flex flex-col space-y-3">
+                <div>Register</div>
+
+                <!--Error message-->
+                <div id="error-message" class="bg-red-400"></div>
+
+                <label for="username">Username:</label>
+                <input type="text" id="username" placeholder="Enter a username" name="username" required class="border">
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" placeholder="Enter a password" name="password" required class="border">
+
+                <label for="confirm_password">Confirm Password:</label>
+                <input type="password" id="confirm_password" placeholder="Enter password again" name="confirm_password" required class="border">
+
+                <button type="submit" class="bg-blue-500">Register</button>
+            </div>
+        </form>
+    </div>
+
+    <script type="module" src="./js/register.js"></script>
+</body>
+</html>

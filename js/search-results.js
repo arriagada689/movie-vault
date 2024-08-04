@@ -1,4 +1,5 @@
 import getQueryParams from './utils/getQueryParams.js'
+import config from './utils/config.js'
 
 const searchResultsWrapper = document.querySelector('#search-results-wrapper')
 const homeSearchForm = document.querySelector('#search-form')
@@ -441,7 +442,7 @@ const type = queryParams && queryParams.type ? queryParams.type : ''
 //hit the api with search query
 if(searchQuery && searchQuery.length > 0){
     const fetchResultData = async () => {
-        const response = await fetch(`http://localhost:5000/api/tmdb/search?query=${searchQuery}&page=${page}&type=${type}`, {
+        const response = await fetch(`${config.apiBaseUrl}/tmdb/search?query=${searchQuery}&page=${page}&type=${type}`, {
             headers: {
                 'Content-Type': 'application/json'
             }
