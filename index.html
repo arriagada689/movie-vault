@@ -11,7 +11,12 @@
     <!--Navbar-->
     <nav class="flex justify-between items center">
         <!--Left side-->
-        <a href="/">Movie Vault</a>
+        <div class="flex items-center space-x-3">
+            <a href="/" class="font-bold text-xl">Movie Vault</a>
+            <a href="movie.html">Movies</a>
+            <a href="tv.html">TV Shows</a>
+            <a href="person.html">People</a>
+        </div>
 
         <!--Right Side-->
         <div id="right-side-nav" class="flex items-center space-x-5">
@@ -27,6 +32,37 @@
         <button type="submit" class="bg-gray-300">Search</button>
     </form>
 
-    <script src="js/script.js"></script>
+    <!--Trending section-->
+    <div class="flex flex-col">
+        <div class="flex items-center space-x-3">
+            <div class="text-xl font-bold">Trending</div>
+
+            <div class="flex items-center border border-black rounded-full">
+                <button id="today-button" class="p-1 rounded-full ">Today</button>
+                <button id="week-button" class="p-1 rounded-full">This Week</button>
+            </div>
+        </div>
+
+        <div id="trending-wrapper" class="flex space-x-3"></div>
+    </div>
+
+    <!--Popular section-->
+    <div class="flex flex-col">
+        <div class="flex items-center space-x-3">
+            <div class="text-xl font-bold">Popular</div>
+
+            <div class="flex items-center border border-black rounded-full">
+                <button id="movie-button" class="p-1 rounded-full">Movies</button>
+                <button id="tv-button" class="p-1 rounded-full">TV Shows</button>
+                <button id="people-button" class="p-1 rounded-full">People</button>
+            </div>
+        </div>
+
+        <div id="popular-wrapper" class="flex space-x-3"></div>
+    </div>
+
+    <div class="h-5 w-5 h-[50px] w-[50px]"></div>
+    
+    <script type="module" src="js/script.js"></script>
 </body>
 </html>
