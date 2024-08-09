@@ -45,12 +45,20 @@ function displayResults(results) {
 
     // Create a string with all the results' HTML
     const resultsHTML = results.map(result => {
+        let link = ''
+        if(type === 'movie' || result.media_type === 'movie'){
+            link += `/movie-details.html?id=${result.id}`
+        } else if(type === 'tv' || result.media_type === 'tv'){
+            link += `/tv-show-details.html?id=${result.id}`
+        } else if(type === 'person' || type === 'people' || result.media_type === 'person' || result.media_type === 'people'){
+            link += `/person-details.html?id=${result.id}`
+        }
         const imageUrl = result.poster_path || result.profile_path ? `https://image.tmdb.org/t/p/w500/${result.poster_path || result.profile_path}` : '../images/no-image-1.png';
         return `
-            <div>
+            <a href="${link}">
                 <img src="${imageUrl}" alt="${result.name || result.title}" class="h-[50px] w-[50px]">
                 ${result.name || result.title}
-            </div>
+            </a>
         `
     }).join('');
 

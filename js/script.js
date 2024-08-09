@@ -66,12 +66,20 @@ displayTrending(dayTrendingData.results)
 function displayTrending(results) {
     // Create a string with all the results' HTML
     const resultsHTML = results.map(result => {
+        let link = ''
+        if(result.media_type === 'movie'){
+            link += `/movie-details.html?id=${result.id}`
+        } else if(result.media_type === 'tv'){
+            link += `/tv-show-details.html?id=${result.id}`
+        } else if(result.media_type === 'person' || result.media_type === 'people'){
+            link += `/person-details.html?id=${result.id}`
+        }
         const imageUrl = result.poster_path ? `https://image.tmdb.org/t/p/w500/${result.poster_path}` : '../images/no-image-1.png';
         return `
-            <div>
+            <a href="${link}">
                 <img src="${imageUrl}" alt="${result.name || result.title}" class="h-[50px] w-[50px]">
                 ${result.name || result.title}
-            </div>
+            </a>
         `
     }).join('')
 
@@ -142,6 +150,14 @@ displayPopular(popularMovieData.results)
 function displayPopular(results) {
     // Create a string with all the results' HTML
     const resultsHTML = results.map(result => {
+        let link = ''
+        if(popularFilter === 'movie'){
+            link += `/movie-details.html?id=${result.id}`
+        } else if(popularFilter === 'tv'){
+            link += `/tv-show-details.html?id=${result.id}`
+        } else if(popularFilter === 'person'){
+            link += `/person-details.html?id=${result.id}`
+        }
         let imageUrl = ''
         if(popularFilter === 'person'){
             imageUrl = result.profile_path ? `https://image.tmdb.org/t/p/w500/${result.profile_path}` : '../images/no-image-1.png'
@@ -150,10 +166,10 @@ function displayPopular(results) {
         }
         
         return `
-            <div>
+            <a href="${link}">
                 <img src="${imageUrl}" alt="${result.name || result.title}" class="h-[50px] w-[50px]">
                 ${result.name || result.title}
-            </div>
+            </a>
         `
     }).join('')
 

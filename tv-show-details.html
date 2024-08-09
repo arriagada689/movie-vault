@@ -14,7 +14,7 @@
             <a href="/" class="font-bold text-xl">Movie Vault</a>
             <a href="movie.html">Movies</a>
             <a href="tv.html">TV Shows</a>
-            <a href="person.html" class="bg-black text-white">People</a>
+            <a href="person.html">People</a>
         </div>
 
         <!--Right Side-->
@@ -24,16 +24,27 @@
         </div>
     </nav>
 
-    <!--Results container-->
-    <div id="results-container" class="flex flex-wrap gap-y-3">
-        
+    <div class="flex">
+        <img id="main-img" src="" alt="" class="h-[50px] w-[50px]">
+
+        <div class="flex flex-col">
+            <div id="name"></div>
+            <div id="release_date"></div>
+            <div id="genres"></div>
+            <div id="overview"></div>
+        </div>
     </div>
 
-    <!--Show more button-->
-    <div id="show-more-btn">
-
+    <!--Cast Section-->
+    <div class="flex flex-col">
+        <div class="text-2xl font-bold">Cast</div>
+        <div id="cast-card-container" class="flex flex-wrap">
+            
+        </div>
     </div>
 
-    <script type="module" src="./js/person.js"></script>
+    <div class="hidden h-[100px] w-[100px] border"></div>
+    
+    <script type="module" src="js/tvShowDetails.js"></script>
 </body>
 </html>

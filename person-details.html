@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Vault</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body class="container mx-auto">
+    <!--Navbar-->
+    <nav class="flex justify-between items center">
+        <!--Left side-->
+        <div class="flex items-center space-x-3">
+            <a href="/" class="font-bold text-xl">Movie Vault</a>
+            <a href="movie.html">Movies</a>
+            <a href="tv.html">TV Shows</a>
+            <a href="person.html">People</a>
+        </div>
+
+        <!--Right Side-->
+        <div id="right-side-nav" class="flex items-center space-x-5">
+            <a href="login.html">Log In</a>
+            <a href="register.html">Register</a>
+        </div>
+    </nav>
+
+    <div class="flex">
+        <img id="main-img" src="" alt="" class="h-[50px] w-[50px]">
+
+        <div class="flex flex-col">
+            <div id="name"></div>
+            <div id="biography"></div>
+        </div>
+    </div>
+
+    <!--Credits Section-->
+    <div class="flex flex-col">
+        <div class="text-2xl font-bold">Credits</div>
+
+        <div class="text-lg font-bold">Acting</div>
+        <div id="actor-container" class="flex flex-wrap">
+            
+        </div>
+
+        <div class="text-lg font-bold">Production</div>
+        <div id="production-container" class="flex flex-wrap">
+            
+        </div>
+
+        <div class="text-lg font-bold">Writing</div>
+        <div id="writing-container" class="flex flex-wrap">
+            
+        </div>
+
+    </div>
+
+    <div class="hidden h-[100px] w-[100px] border"></div>
+    
+    <script type="module" src="js/personDetails.js"></script>
+</body>
+</html>
