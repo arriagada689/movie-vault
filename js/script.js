@@ -1,7 +1,6 @@
 import config from '../js/utils/config.js'
 
 const homeSearchForm = document.querySelector('#home-search-form')
-const rightSideNav = document.querySelector('#right-side-nav')
 
 homeSearchForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -11,30 +10,6 @@ homeSearchForm.addEventListener('submit', (e) => {
     //re-route to search results page
     window.location.href = `search-results.html?query=${encodeURIComponent(searchText)}`
 })
-
-//handle dynamic navbar
-if(localStorage.getItem('userInfo')){
-    rightSideNav.innerHTML = ''
-    
-    //create log out button
-    const logoutButton = document.createElement('button')
-    logoutButton.innerText = 'Log Out'
-    logoutButton.addEventListener('click', logout)
-
-    rightSideNav.innerHTML = `
-        <a href="profile.html">Profile</a>
-    `
-    rightSideNav.appendChild(logoutButton)
-}
-
-function logout() {
-    localStorage.removeItem('userInfo')
-    rightSideNav.innerHTML = ''
-    rightSideNav.innerHTML = `
-        <a href="login.html">Log In</a>
-        <a href="register.html">Register</a>
-    `
-}
 
 //trending section, day and week filtering
 const trendingWrapper = document.querySelector('#trending-wrapper')
