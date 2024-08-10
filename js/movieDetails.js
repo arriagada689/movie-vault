@@ -18,7 +18,6 @@ async function getMovieDetails(){
         })
         if(response.ok){
             const data = await response.json()
-            // console.log(data);
             movieData = data.movie_data
             displayData(data.movie_data)
             displayCast(data.credits.cast)
@@ -96,6 +95,7 @@ async function checkFavoriteStatus(){
             setFavoriteButton()
         }
     }
+    setFavoriteButton()
     return false
 }
 
@@ -120,7 +120,6 @@ favoriteButton.addEventListener('click', async () => {
             const data = await response.json()
             favoriteStatus = true
             setFavoriteButton()
-            // console.log(data);
         } else {
             const error = await response.json()
             console.log(error);

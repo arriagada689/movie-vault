@@ -139,6 +139,7 @@ async function checkFavoriteStatus() {
             setFavoriteButton()
         }
     }
+    setFavoriteButton()
     return false
 }
 
