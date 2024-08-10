@@ -4,6 +4,8 @@ import samplePersonDetails from './data/samplePersonDetails.js'
 
 const queryParams = getQueryParams()
 const personId = queryParams.id
+let personData = ''
+let favoriteStatus = false
 
 //fetch initial data
 async function getPersonDetails(){
@@ -16,8 +18,10 @@ async function getPersonDetails(){
         if(response.ok){
             const data = await response.json()
             // console.log(data);
+            personData = data.person_data
             displayData(data.person_data)
             displayCredits(data.credits_data)
+            favoriteStatus = checkFavoriteStatus()
         }
     } catch (error) {
         console.log(error);
@@ -103,3 +107,80 @@ function sortByDate(arr){
 }
 
 getPersonDetails()
+
+//add to favorites section
+const favoriteButton = document.querySelector('#favorite-btn')
+
+const token = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')).token : ''
+
+favoriteButton.addEventListener('click', async () => {
+    if(localStorage.getItem('userInfo') && !favoriteStatus){
+        const response = await fetch(`${config.apiBaseUrl}/users/add_person`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                name: personData.name,
+                id: personData.id,
+                image: personData.profile_path,
+                known_for_department: personData.known_for_department
+            })
+        })
+        if(response.ok){
+            const data = await response.json()
+            favoriteStatus = true
+            setFavoriteButton()
+            // console.log(data);
+        } else {
+            const error = await response.json()
+            console.log(error);
+        }
+    } else if(localStorage.getItem('userInfo') && favoriteStatus){
+        //remove from favorites
+        const response = await fetch(`${config.apiBaseUrl}/users/delete_item?type=person&id=${personData.id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        if(response.ok){
+            const data = await response.json()
+            favoriteStatus = false
+            setFavoriteButton()
+        } else {
+            const error = await response.json()
+            console.log(error);
+        }
+    } else {
+        window.location.href = `/login.html`
+    }
+}) 
+
+async function checkFavoriteStatus() {
+    if(localStorage.getItem('userInfo') && token){
+        const response = await fetch(`${config.apiBaseUrl}/users/favorite_status?type=person&id=${personData.id}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+        })
+        if(response.ok){
+            const data = await response.json()
+            favoriteStatus = data.status
+            setFavoriteButton()
+        }
+    }
+    return false
+}
+
+//change the button in the frontend based on favorite status
+function setFavoriteButton(){
+    if(favoriteStatus){
+        favoriteButton.textContent = 'Remove from Favorites'
+    } else {
+        favoriteButton.textContent = 'Add to Favorites'
+    }
+}
