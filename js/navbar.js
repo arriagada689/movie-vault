@@ -10,6 +10,7 @@ if(localStorage.getItem('userInfo')){
     logoutButton.addEventListener('click', logout)
 
     rightSideNav.innerHTML = `
+        <a href="create-list.html">Create List</a>
         <a href="profile.html">Profile</a>
     `
     rightSideNav.appendChild(logoutButton)

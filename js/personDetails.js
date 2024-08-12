@@ -22,6 +22,7 @@ async function getPersonDetails(){
             displayData(data.person_data)
             displayCredits(data.credits_data)
             favoriteStatus = checkFavoriteStatus()
+            getUserList()
         }
     } catch (error) {
         console.log(error);
@@ -183,5 +184,96 @@ function setFavoriteButton(){
         favoriteButton.textContent = 'Remove from Favorites'
     } else {
         favoriteButton.textContent = 'Add to Favorites'
+    }
+}
+
+//fetch users lists
+async function getUserList(){
+    if(localStorage.getItem('userInfo') && token){
+        const response = await fetch(`${config.apiBaseUrl}/users/list_data/${personData.id}/person`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        if(response.ok){
+            const data = await response.json()
+            displayUserLists(data)
+        }
+    }
+}
+
+const userListsContainer = document.querySelector('#user-list-container')
+
+function displayUserLists(lists){
+    userListsContainer.innerHTML = ''
+
+    //create buttons for each list
+    lists.forEach(list => {
+        const button = document.createElement('button')
+        const subDiv = document.createElement('div')
+        const statusDiv = document.createElement('div')
+        subDiv.textContent = list.name
+        statusDiv.textContent = list.status
+        button.appendChild(subDiv)
+        button.appendChild(statusDiv)
+        button.className = 'w-full flex justify-between p-2 border'
+
+        button.addEventListener('click', () => {
+            if(!list.status){
+                addPersonToList(list._id)
+            } else {
+                removePersonFromList(list._id)
+            }
+            list.status = list.status ? false : true
+            button.childNodes[1].textContent = list.status
+        })
+
+        userListsContainer.appendChild(button)
+    })
+}
+
+async function addPersonToList(list_id){
+    const response = await fetch(`${config.apiBaseUrl}/users/list_add_person`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+            list_id: list_id,
+            name: personData.name,
+            id: personData.id,
+            image: personData.profile_path,
+            known_for_department: personData.known_for_department
+        })
+    })
+    if(response.ok){
+        const data = await response.json()
+    } else {
+        const error = await response.json()
+        console.log(error);
+    }
+}
+
+async function removePersonFromList(list_id){
+    const response = await fetch(`${config.apiBaseUrl}/users/list_remove_item`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+            list_id: list_id,
+            id: personData.id,
+            type: 'person'
+        })
+    })
+    if(response.ok){
+        const data = await response.json()
+        
+    } else {
+        const error = await response.json()
+        console.log(error);
     }
 }

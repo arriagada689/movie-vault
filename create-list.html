@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Vault</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body class="flex flex-col container mx-auto h-[100vh]">
+
+    <!--Navbar-->
+    <nav class="flex justify-between items center">
+        <!--Left side-->
+        <div class="flex items-center space-x-3">
+            <a href="/" class="font-bold text-xl">Movie Vault</a>
+            <a href="movie.html">Movies</a>
+            <a href="tv.html">TV Shows</a>
+            <a href="person.html">People</a>
+        </div>
+
+        <!--Right Side-->
+        <div id="right-side-nav" class="flex items-center space-x-5">
+            <a href="login.html">Log In</a>
+            <a href="register.html">Register</a>
+        </div>
+    </nav>
+    
+    <!--Form-->
+    <div class="flex flex-1 items-center justify-center">
+        <form id="create-list-form" action="">
+            <div class="flex flex-col space-y-3">
+                <div>Create List</div>
+
+                <!--Error message-->
+                <div id="error-message" class="bg-red-400"></div>
+
+                <label for="name">Name:</label>
+                <input type="text" id="name" placeholder="Enter list name" name="name" required class="border">
+
+                <label for="description">Description:</label>
+                <input type="text" id="description" placeholder="Enter list description" name="description" class="border">
+
+                <button type="submit" class="bg-blue-500">Create</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="hidden "></div>
+    
+    <script type="module" src="js/createList.js"></script>
+    <script type="module" src="js/navbar.js"></script>
+</body>
+</html>

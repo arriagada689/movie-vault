@@ -22,6 +22,7 @@ async function getTvShowDetails(){
             displayData(data.tv_data)
             displayCast(data.credits.cast)
             favoriteStatus = checkFavoriteStatus()
+            getUserList()
         }
     } catch (error) {
         console.log(error);
@@ -149,5 +150,97 @@ function setFavoriteButton(){
         favoriteButton.textContent = 'Remove from Favorites'
     } else {
         favoriteButton.textContent = 'Add to Favorites'
+    }
+}
+
+//fetch users lists
+async function getUserList(){
+    if(localStorage.getItem('userInfo') && token){
+        const response = await fetch(`${config.apiBaseUrl}/users/list_data/${tvShowData.id}/tv`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        if(response.ok){
+            const data = await response.json()
+            displayUserLists(data)
+        }
+    }
+}
+
+const userListsContainer = document.querySelector('#user-list-container')
+
+function displayUserLists(lists){
+    userListsContainer.innerHTML = ''
+
+    //create buttons for each list
+    lists.forEach(list => {
+        const button = document.createElement('button')
+        const subDiv = document.createElement('div')
+        const statusDiv = document.createElement('div')
+        subDiv.textContent = list.name
+        statusDiv.textContent = list.status
+        button.appendChild(subDiv)
+        button.appendChild(statusDiv)
+        button.className = 'w-full flex justify-between p-2 border'
+
+        button.addEventListener('click', () => {
+            if(!list.status){
+                addTvShowToList(list._id)
+            } else {
+                removeTvShowFromList(list._id)
+            }
+            list.status = list.status ? false : true
+            button.childNodes[1].textContent = list.status
+        })
+
+        userListsContainer.appendChild(button)
+    })
+}
+
+async function addTvShowToList(list_id){
+    const response = await fetch(`${config.apiBaseUrl}/users/list_add_tv`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+            list_id: list_id,
+            name: tvShowData.name,
+            id: tvShowData.id,
+            image: tvShowData.poster_path,
+            genres: tvShowData.genres,
+            first_air_date: tvShowData.first_air_date
+        })
+    })
+    if(response.ok){
+        const data = await response.json()
+    } else {
+        const error = await response.json()
+        console.log(error);
+    }
+}
+
+async function removeTvShowFromList(list_id){
+    const response = await fetch(`${config.apiBaseUrl}/users/list_remove_item`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+            list_id: list_id,
+            id: tvShowData.id,
+            type: 'tv'
+        })
+    })
+    if(response.ok){
+        const data = await response.json()
+        
+    } else {
+        const error = await response.json()
+        console.log(error);
     }
 }
