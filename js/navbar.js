@@ -18,6 +18,7 @@ if(localStorage.getItem('userInfo')){
 
 function logout() {
     localStorage.removeItem('userInfo')
+    window.location.href = '/'
     rightSideNav.innerHTML = ''
     rightSideNav.innerHTML = `
         <a href="login.html">Log In</a>
