@@ -4,6 +4,8 @@ import getQueryParams from './utils/getQueryParams.js'
 const queryParams = getQueryParams() 
 const id = queryParams.id
 
+let tempListItems = []
+
 const token = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')).token : ''
 
 async function getListDetails(){
@@ -15,6 +17,7 @@ async function getListDetails(){
     })
     if(response.ok){
         const data = await response.json()
+        tempListItems = data.list_items
         displayListDetails(data)
         displayListItems(data.list_items)
     } 
@@ -37,7 +40,7 @@ function displayListDetails(data){
 function displayListItems(items){
     listItems.innerHTML = ''
 
-    listItems.innerHTML = items.map(item => {
+    listItems.innerHTML = items.map((item, index) => {
         let link = ''
         if(item.type === 'Movie'){
             link += `/movie-details.html?id=${item.id}`
@@ -48,12 +51,46 @@ function displayListItems(items){
         }
         const imageUrl = item.image ? `https://image.tmdb.org/t/p/w500/${item.image}` : '../images/no-image-1.png';
         return `
-            <a href="${link}">
+            <a id="list-card-${index}" href="${link}">
                 <img src="${imageUrl}" alt="${item.name || item.title}" class="h-[50px] w-[50px]">
                 ${item.name || item.title}
+                <button id="remove-btn" value="${index}" class="bg-red-400">Remove</button>
             </a>
         `
     }).join('')
+
+    document.querySelectorAll('#remove-btn').forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.stopPropagation()
+            e.preventDefault()
+            const index = button.value
+            removeItemFromList(id, items[index].id, items[index].type.toLowerCase())
+            const card = document.querySelector(`#list-card-${index}`)
+            card.classList.add('hidden')
+        })
+    })
+}
+
+async function removeItemFromList(list_id, id, type){
+    const response = await fetch(`${config.apiBaseUrl}/users/list_remove_item`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+            list_id: list_id,
+            id: id,
+            type: type
+        })
+    })
+    if(response.ok){
+        const data = await response.json()
+        
+    } else {
+        const error = await response.json()
+        console.log(error);
+    }
 }
 
 const updateLinkList = document.querySelector('#update-list-link')

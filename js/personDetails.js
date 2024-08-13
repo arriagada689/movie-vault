@@ -208,28 +208,28 @@ const userListsContainer = document.querySelector('#user-list-container')
 function displayUserLists(lists){
     userListsContainer.innerHTML = ''
 
-    //create buttons for each list
-    lists.forEach(list => {
-        const button = document.createElement('button')
-        const subDiv = document.createElement('div')
-        const statusDiv = document.createElement('div')
-        subDiv.textContent = list.name
-        statusDiv.textContent = list.status
-        button.appendChild(subDiv)
-        button.appendChild(statusDiv)
-        button.className = 'w-full flex justify-between p-2 border'
+    userListsContainer.innerHTML = lists.map((list, index) => {
+        return `
+            <button id="list-btn" value="${index}" class="w-full flex justify-between p-2 border">
+                <div>${list.name}</div>
+                <div>${list.status}</div>
+            </button>
+        `
+    }).join('')
 
-        button.addEventListener('click', () => {
-            if(!list.status){
-                addPersonToList(list._id)
+    document.querySelectorAll('#list-btn').forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.stopPropagation()
+            e.preventDefault()
+            const index = button.value
+            if(!lists[index].status){
+                addPersonToList(lists[index]._id)
             } else {
-                removePersonFromList(list._id)
+                removePersonFromList(lists[index]._id)
             }
-            list.status = list.status ? false : true
-            button.childNodes[1].textContent = list.status
+            lists[index].status = lists[index].status ? false : true
+            button.childNodes[3].textContent = lists[index].status
         })
-
-        userListsContainer.appendChild(button)
     })
 }
 

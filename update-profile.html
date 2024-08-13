@@ -6,7 +6,7 @@
     <title>Movie Vault</title>
     <link rel="stylesheet" href="css/main.css">
 </head>
-<body class="container mx-auto">
+<body class="flex flex-col container mx-auto h-[100vh]">
 
     <!--Navbar-->
     <nav class="flex justify-between items center">
@@ -25,33 +25,28 @@
         </div>
     </nav>
 
-    <div class="text-center text-xl font-bold">Profile</div>
-    <div id="username" class="text-center text-blue-500"></div>
-    <div class="flex justify-center gap-x-3">
-        <a href="update-profile.html" class="bg-green-300">Update Profile</a>
-        <a href="delete-profile.html" class="bg-red-300">Delete Profile</a>
-    </div>
+     <!--Form-->
+     <div class="flex flex-1 flex-col items-center justify-center">
+        <a id="go-back-button"></a>
+        <form id="update-profile-form" action="">
+            <div class="flex flex-col space-y-3">
+                <div>Update Profile</div>
 
-    <div class="flex">
-        <div class="w-1/4">
-            <div class="text-lg font-bold">Lists</div>
-            <div class="flex flex-col" id="user-lists-container">
+                <!--Error message-->
+                <div id="error-message" class="bg-red-400"></div>
 
+                <label for="username">Username:</label>
+                <input type="text" id="username" placeholder="Enter username" name="username" required class="border">
+
+                <button type="submit" class="bg-blue-500">Update</button>
             </div>
-        </div>
-
-        <div class="w-3/4">
-            <div class="text-lg font-bold">Favorites</div>
-            <div class="flex flex-col" id="favorites-container">
-                
-            </div>
-        </div>
+        </form>
     </div>
 
     <div class="hidden"></div>
     
     <script type="module" src="js/protect.js"></script>
-    <script type="module" src="js/profile.js"></script>
+    <script type="module" src="js/updateProfile.js"></script>
     <script type="module" src="js/navbar.js"></script>
 </body>
 </html>
