@@ -1,4 +1,5 @@
 import config from '../js/utils/config.js'
+import { addItemToFavorites, removeItemFromFavorites } from './utils/favorite.js';
 
 const homeSearchForm = document.querySelector('#home-search-form')
 
@@ -15,6 +16,9 @@ homeSearchForm.addEventListener('submit', (e) => {
 const trendingWrapper = document.querySelector('#trending-wrapper')
 let trendingFilter = 'day'
 
+let tempTrendingData = []
+let tempPopularData = []
+
 const getTrendingData = async () => {
     try {
         const response = await fetch(`${config.apiBaseUrl}/tmdb/trending?type=${trendingFilter}`, {
@@ -24,7 +28,9 @@ const getTrendingData = async () => {
         })
         if(response.ok){
             const data = await response.json()
-            displayTrending(data.results)
+            tempTrendingData = data.results
+            const newResults = await getPredisplayData(data.results)
+            displayTrending(newResults)
         }
     } catch (error) {
         console.log(error);
@@ -32,7 +38,9 @@ const getTrendingData = async () => {
 }
 
 import {dayTrendingData, weekTrendingData} from './data/trendingData.js';
-displayTrending(dayTrendingData.results)
+const newResults2 = await getPredisplayData(dayTrendingData.results)
+displayTrending(newResults2)
+tempTrendingData = dayTrendingData.results
 // if(trendingWrapper.childNodes.length === 0){
 //     getTrendingData()
 // }
@@ -40,7 +48,7 @@ displayTrending(dayTrendingData.results)
 //trending cards can be movies, tv shows, and people
 function displayTrending(results) {
     // Create a string with all the results' HTML
-    const resultsHTML = results.map(result => {
+    const resultsHTML = results.map((result, index) => {
         let link = ''
         if(result.media_type === 'movie'){
             link += `/movie-details.html?id=${result.id}`
@@ -54,11 +62,35 @@ function displayTrending(results) {
             <a href="${link}">
                 <img src="${imageUrl}" alt="${result.name || result.title}" class="h-[50px] w-[50px]">
                 ${result.name || result.title}
+                <button id="trending-favorite-btn" value="${index}" class="bg-red-400">${result.favorite_status ? 'Remove' : 'Add'}</button>
             </a>
         `
     }).join('')
 
     trendingWrapper.innerHTML = resultsHTML
+
+    // Re-attach event listeners to the new buttons
+    document.querySelectorAll('#trending-favorite-btn').forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.stopPropagation()
+            e.preventDefault()
+            if(localStorage.getItem('userInfo')){
+                const index = button.value
+                const action = button.textContent.trim()
+                const itemType = tempTrendingData[Number(index)].media_type
+
+                if(action === 'Add'){
+                    addItemToFavorites(itemType, tempTrendingData[index])
+                    button.textContent = "Remove"
+                } else if(action === 'Remove'){
+                    removeItemFromFavorites(itemType, tempTrendingData[index].id)
+                    button.textContent = "Add"
+                }
+            } else {
+                window.location.href = `/login.html`
+            }
+        })
+    })
 }
 
 const todayButton = document.querySelector('#today-button')
@@ -107,8 +139,9 @@ const getPopularData = async () => {
         })
         if(response.ok){
             const data = await response.json()
-            // console.log(data);
-            displayPopular(data.results)
+            tempPopularData = data.results
+            const newResults = await getPredisplayData(data.results)
+            displayPopular(newResults)
         }
     } catch (error) {
         console.log(error);
@@ -116,15 +149,15 @@ const getPopularData = async () => {
 }
 
 import { popularMovieData, popularTvData, popularPeopleData } from './data/popularData.js';
-displayPopular(popularMovieData.results)
-// if(popularWrapper.childNodes.length === 0){
-//     getPopularData()
-// }
+const newResults = await getPredisplayData(popularMovieData.results)
+displayPopular(newResults)
+tempPopularData = popularMovieData.results
+//getPopularData()
 
 //popular cards
 function displayPopular(results) {
     // Create a string with all the results' HTML
-    const resultsHTML = results.map(result => {
+    const resultsHTML = results.map((result, index) => {
         let link = ''
         if(popularFilter === 'movie'){
             link += `/movie-details.html?id=${result.id}`
@@ -144,11 +177,33 @@ function displayPopular(results) {
             <a href="${link}">
                 <img src="${imageUrl}" alt="${result.name || result.title}" class="h-[50px] w-[50px]">
                 ${result.name || result.title}
+                <button id="favorite-btn" value="${index}" class="bg-red-400">${result.favorite_status ? 'Remove' : 'Add'}</button>
             </a>
         `
     }).join('')
 
     popularWrapper.innerHTML = resultsHTML
+
+    // Re-attach event listeners to the new buttons
+    document.querySelectorAll('#favorite-btn').forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.stopPropagation()
+            e.preventDefault()
+            if(localStorage.getItem('userInfo')){
+                const index = button.value
+                const action = button.textContent.trim()
+                if(action === 'Add'){
+                    addItemToFavorites(popularFilter, tempPopularData[index])
+                    button.textContent = "Remove"
+                } else if(action === 'Remove'){
+                    removeItemFromFavorites(popularFilter, tempPopularData[index].id)
+                    button.textContent = "Add"
+                }
+            } else {
+                window.location.href = `/login.html`
+            }
+        })
+    })
 }
 
 const movieButton = document.querySelector('#movie-button')
@@ -195,3 +250,24 @@ movieButton.addEventListener('click', () => {
     peopleButton.classList.remove('bg-blue-300')
     movieButton.classList.add('bg-blue-300')
 })
+
+async function getPredisplayData(results){
+    if(localStorage.getItem('userInfo')){
+        const token = JSON.parse(localStorage.getItem('userInfo')).token
+        const response = await fetch(`${config.apiBaseUrl}/users/predisplay`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                results: results
+            })
+        })
+        if(response.ok){
+            const data = await response.json()
+            return data
+        }
+    }
+    return results
+}

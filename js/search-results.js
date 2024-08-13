@@ -1,5 +1,6 @@
 import getQueryParams from './utils/getQueryParams.js'
 import config from './utils/config.js'
+import { addItemToFavorites, removeItemFromFavorites } from './utils/favorite.js';
 
 const searchResultsWrapper = document.querySelector('#search-results-wrapper')
 const homeSearchForm = document.querySelector('#search-form')
@@ -12,6 +13,8 @@ const searchQuery = queryParams.query
 const page = queryParams && queryParams.page ? queryParams.page : 1
 const type = queryParams && queryParams.type ? queryParams.type : ''
 
+let tempResults = []
+
 //hit the api with search query
 if(searchQuery && searchQuery.length > 0){
     const fetchResultData = async () => {
@@ -23,7 +26,9 @@ if(searchQuery && searchQuery.length > 0){
         if(response.ok){
             const data = await response.json()
             // console.log(data);
-            displayResults(data.results)
+            tempResults = data.results
+            const newResults = await getPredisplayData(data.results)
+            displayResults(newResults)
             setPagination(data.total_pages)
         } else {
             const error = await response.json()
@@ -44,7 +49,7 @@ function displayResults(results) {
     }
 
     // Create a string with all the results' HTML
-    const resultsHTML = results.map(result => {
+    const resultsHTML = results.map((result, index) => {
         let link = ''
         if(type === 'movie' || result.media_type === 'movie'){
             link += `/movie-details.html?id=${result.id}`
@@ -58,11 +63,35 @@ function displayResults(results) {
             <a href="${link}">
                 <img src="${imageUrl}" alt="${result.name || result.title}" class="h-[50px] w-[50px]">
                 ${result.name || result.title}
+                <button id="favorite-btn" value="${index}" class="bg-red-400">${result.favorite_status ? 'Remove' : 'Add'}</button>
             </a>
         `
     }).join('');
 
     searchResultsWrapper.innerHTML = resultsHTML;
+
+    // Re-attach event listeners to the new buttons
+    document.querySelectorAll('#favorite-btn').forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.stopPropagation()
+            e.preventDefault()
+            if(localStorage.getItem('userInfo')){
+                const index = button.value
+                const action = button.textContent.trim()
+                const itemType = tempResults[Number(index)].media_type || type
+
+                if(action === 'Add'){
+                    addItemToFavorites(itemType, tempResults[index])
+                    button.textContent = "Remove"
+                } else if(action === 'Remove'){
+                    removeItemFromFavorites(itemType, tempResults[index].id)
+                    button.textContent = "Add"
+                }
+            } else {
+                window.location.href = `/login.html`
+            }
+        })
+    })
 }
 
 //search bar submit
@@ -99,3 +128,23 @@ function paginationClick(page){
     window.location.href = `search-results.html?query=${encodeURIComponent(queryParams.query)}${type ? `&type=${type}` : ''}&page=${page}`
 }
 
+async function getPredisplayData(results){
+    if(localStorage.getItem('userInfo')){
+        const token = JSON.parse(localStorage.getItem('userInfo')).token
+        const response = await fetch(`${config.apiBaseUrl}/users/predisplay`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                results: results
+            })
+        })
+        if(response.ok){
+            const data = await response.json()
+            return data
+        }
+    }
+    return results
+}
