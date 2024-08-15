@@ -8,6 +8,12 @@ let tempListItems = []
 
 const token = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')).token : ''
 
+const genreMap = {
+    "Action": ["Action", "Adventure", "Action & Adventure"],
+    "Sci-Fi": ["Science Fiction", "Sci-Fi", "Sci-Fi & Fantasy"],
+    "War": ["War", "War & Politics"]
+};
+
 async function getListDetails(){
     const response = await fetch(`${config.apiBaseUrl}/users/list_details/${id}`, {
         headers: {
@@ -93,5 +99,82 @@ async function removeItemFromList(list_id, id, type){
     }
 }
 
+//delete list section
+const deleteListButton = document.querySelector('#delete-list-btn')
+deleteListButton.addEventListener('click', async () => {
+    const confirmation = window.confirm('Are you sure you want to delete this list?')
+
+    if(confirmation){
+        const response = await fetch(`${config.apiBaseUrl}/users/delete_list/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        if(response.ok){
+            const data = await response.json()
+            window.location.href = '/'
+        }
+    }
+})
+
 const updateLinkList = document.querySelector('#update-list-link')
 updateLinkList.href = `/update-list.html?id=${id}`
+
+function getFilters(items){
+    const uniqueGenres = new Set()
+
+    items.forEach(item => {
+        if (item.genres) {
+            item.genres.forEach(genreObj => {
+                uniqueGenres.add(genreObj.name);
+            });
+            
+        } else if (item.known_for_department) {
+            uniqueGenres.add(item.known_for_department);
+        }
+    })
+    return Array.from(uniqueGenres)
+}
+
+function mergeSimilarGenres(genres) {
+
+    const mergedGenres = new Set();
+
+    genres.forEach(genre => {
+        let matched = false;
+
+        for (let key in genreMap) {
+            if (genreMap[key].includes(genre)) {
+                mergedGenres.add(key);
+                matched = true;
+                break;
+            }
+        }
+
+        if (!matched) {
+            mergedGenres.add(genre);
+        }
+    });
+
+    return Array.from(mergedGenres);
+}
+
+const filterButtonsContainer = document.querySelector('#filter-buttons-container')
+
+function displayFilterButtons(buttons){
+    filterButtonsContainer.innerHTML = buttons.map((button, index) => {
+        return `
+            <button id="filter-btn" data-key="${index}" class="bg-blue-300">
+                ${button}
+            </button>
+        `
+    }).join('')
+
+    document.querySelectorAll('#filter-btn').forEach((button, index) => {
+        button.addEventListener('click', () => {
+            const index = button.getAttribute('data-key')
+        })
+    })
+}
