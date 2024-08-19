@@ -7,17 +7,36 @@
     <link rel="stylesheet" href="css/main.css">
 </head>
 <body class="flex flex-col container mx-auto h-[100vh]">
-    <!--Navbar-->
-    <nav class="flex justify-between items center">
+    
+    <!--Desktop Navbar-->
+    <nav class="hidden md:flex justify-between items-center h-[60px] px-2 md:px-0 font-semibold">
         <!--Left side-->
-        <a href="/">Movie Vault</a>
+        <div class="flex items-center space-x-5">
+            <a href="/" class="font-bold text-2xl ">Movie Vault</a>
+            <a href="movie.html">Movies</a>
+            <a href="tv.html">TV Shows</a>
+            <a href="person.html">People</a>
+        </div>
 
         <!--Right Side-->
-        <div class="flex items-center space-x-5">
-            <a href="login.html" class="bg-black text-white">Log In</a>
+        <div id="right-side-nav" class="flex items-center space-x-5">
+            <a href="login.html" class="bg-purple-700 text-white p-2 rounded-xl">Log In</a>
             <a href="register.html">Register</a>
         </div>
     </nav>
+
+    <!--Mobile Navbar-->
+    <nav class="md:hidden flex items-center h-[60px] px-2 font-semibold w-full relative">
+        <i id="menu-icon" class="fa-solid fa-bars absolute left-3 font-bold text-xl"></i>
+        <div class="font-bold text-xl w-full text-center">
+            <a href="/" class="w-fit">Movie Vault</a>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="fixed top-0 left-0 flex flex-col items-start px-4 space-y-6 text-xl h-full w-full bg-purple-800 text-white font-bold transform -translate-x-full transition-transform duration-300">
+        <button id="close-sidebar" class="flex items-center gap-x-3 text-white text-xl pt-5"><i class="fa-solid fa-circle-xmark"></i><span class="text-sm">Close</span></button>
+    </div>
 
     <div class="flex flex-1 items-center justify-center">
         <form id="login-form" action="">
@@ -40,5 +59,6 @@
 
     <script type="module" src="./js/login.js"></script>
     <script type="module" src="js/navbar.js"></script>
+    <script src="https://kit.fontawesome.com/d1384d0569.js" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -6,64 +6,84 @@
     <title>Movie Vault</title>
     <link rel="stylesheet" href="css/main.css">
 </head>
-<body class="container mx-auto">
+<body>
 
-    <!--Navbar-->
-    <nav class="flex justify-between items center">
-        <!--Left side-->
-        <div class="flex items-center space-x-3">
-            <a href="/" class="font-bold text-xl">Movie Vault</a>
-            <a href="movie.html">Movies</a>
-            <a href="tv.html">TV Shows</a>
-            <a href="person.html">People</a>
-        </div>
+    <!--Loading-->
+    <div id="awake" class="bg-black h-[100vh] text-white flex items-center justify-center">Loading</div>
 
-        <!--Right Side-->
-        <div id="right-side-nav" class="flex items-center space-x-5">
-            <a href="login.html">Log In</a>
-            <a href="register.html">Register</a>
-        </div>
-    </nav>
-    
-    <div>Home Page</div>
+    <div class="container mx-auto">
 
-    <form id="home-search-form" action="">
-        <input type="text" class="border-2"/>
-        <button type="submit" class="bg-gray-300">Search</button>
-    </form>
-
-    <!--Trending section-->
-    <div class="flex flex-col">
-        <div class="flex flex-wrap items-center space-x-3">
-            <div class="text-xl font-bold">Trending</div>
-
-            <div class="flex items-center border border-black rounded-full">
-                <button id="today-button" class="p-1 rounded-full ">Today</button>
-                <button id="week-button" class="p-1 rounded-full">This Week</button>
+        <!--Desktop Navbar-->
+        <nav class="hidden md:flex justify-between items-center h-[60px] px-2 md:px-0 font-semibold">
+            <!--Left side-->
+            <div class="flex items-center space-x-5">
+                <a href="/" class="font-bold text-2xl ">Movie Vault</a>
+                <a href="movie.html">Movies</a>
+                <a href="tv.html">TV Shows</a>
+                <a href="person.html">People</a>
             </div>
-        </div>
 
-        <div id="trending-wrapper" class="flex space-x-3"></div>
-    </div>
-
-    <!--Popular section-->
-    <div class="flex flex-col">
-        <div class="flex items-center space-x-3">
-            <div class="text-xl font-bold">Popular</div>
-
-            <div class="flex items-center border border-black rounded-full">
-                <button id="movie-button" class="p-1 rounded-full">Movies</button>
-                <button id="tv-button" class="p-1 rounded-full">TV Shows</button>
-                <button id="people-button" class="p-1 rounded-full">People</button>
+            <!--Right Side-->
+            <div id="right-side-nav" class="flex items-center space-x-5">
+                <a href="login.html">Log In</a>
+                <a href="register.html">Register</a>
             </div>
+        </nav>
+
+        <!--Mobile Navbar-->
+        <nav class="md:hidden flex items-center h-[60px] px-2 font-semibold w-full relative">
+            <i id="menu-icon" class="fa-solid fa-bars absolute left-3 font-bold text-xl"></i>
+            
+            <div class="font-bold text-xl w-full text-center">
+                <a href="/" class="w-fit">Movie Vault</a>
+            </div>
+        </nav>
+
+        <!-- Sidebar -->
+        <div id="sidebar" class="fixed top-0 left-0 flex flex-col items-start px-4 space-y-6 text-xl h-full w-full bg-purple-800 text-white font-bold transform -translate-x-full transition-transform duration-300">
+            <button id="close-sidebar" class="flex items-center gap-x-3 text-white text-xl pt-5"><i class="fa-solid fa-circle-xmark"></i><span class="text-sm">Close</span></button>
+            
         </div>
 
-        <div id="popular-wrapper" class="flex space-x-3"></div>
-    </div>
+        <form id="home-search-form" action="">
+            <input type="text" class="border-2"/>
+            <button type="submit" class="bg-gray-300">Search</button>
+        </form>
 
-    <div class="hidden h-5 w-5 h-[50px] w-[50px] bg-blue-300 h-[100px] w-[100px]"></div>
+        <!--Trending section-->
+        <div class="flex flex-col">
+            <div class="flex items-center space-x-3">
+                <div class="text-xl font-bold">Trending</div>
+
+                <div class="flex flex-wrap items-center border border-black rounded-full">
+                    <button id="today-button" class="p-1 rounded-full ">Today</button>
+                    <button id="week-button" class="p-1 rounded-full">This Week</button>
+                </div>
+            </div>
+
+            <div id="trending-wrapper" class="flex flex-col md:flex-row flex-wrap"></div>
+        </div>
+
+        <!--Popular section-->
+        <div class="flex flex-col">
+            <div class="flex items-center space-x-3">
+                <div class="text-xl font-bold">Popular</div>
+
+                <div class="flex items-center border border-black rounded-full">
+                    <button id="movie-button" class="p-1 rounded-full">Movies</button>
+                    <button id="tv-button" class="p-1 rounded-full">TV Shows</button>
+                    <button id="people-button" class="p-1 rounded-full">People</button>
+                </div>
+            </div>
+
+            <div id="popular-wrapper" class="flex flex-col md:flex-row flex-wrap"></div>
+        </div>
+
+        <div class="hidden h-5 w-5 h-[50px] w-[50px] bg-blue-300 h-[100px] w-[100px] border-b border-white h-[1px] bg-white"></div>
+    </div>
     
     <script type="module" src="js/script.js"></script>
     <script type="module" src="js/navbar.js"></script>
+    <script src="https://kit.fontawesome.com/d1384d0569.js" crossorigin="anonymous"></script>
 </body>
 </html>

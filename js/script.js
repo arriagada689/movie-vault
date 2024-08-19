@@ -1,6 +1,16 @@
 import config from '../js/utils/config.js'
 import { addItemToFavorites, removeItemFromFavorites } from './utils/favorite.js';
 
+//awake server
+const loadingDiv = document.querySelector('#awake')
+const awake = await fetch(`${config.apiBaseUrl}/users/awake`)
+if(awake.ok){
+    const data = await awake.json()
+    if(data === 'awake'){
+        loadingDiv.classList.add('hidden')
+    }
+}
+
 const homeSearchForm = document.querySelector('#home-search-form')
 
 homeSearchForm.addEventListener('submit', (e) => {
