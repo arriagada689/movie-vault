@@ -38,8 +38,14 @@
         <button id="close-sidebar" class="flex items-center gap-x-3 text-white text-xl pt-5"><i class="fa-solid fa-circle-xmark"></i><span class="text-sm">Close</span></button>
     </div>
 
-    <div className='text-center text-3xl'>Are you sure you want to delete your account?</div>
-    <button id="delete-btn">Confirm Delete</button>
+    <div class="flex flex-col flex-1 md:items-center md:justify-center mt-3 md:mt-0 space-y-4">
+        <i class="fa-solid fa-triangle-exclamation text-9xl text-purple-700 mx-auto"></i>
+        <div class='text-center text-3xl font-bold'>Are you sure you want to delete your account?</div>
+        <div class="mx-auto space-x-3">
+            <button id="delete-btn" class='border-2 border-red-600 p-3 text-red-700 bg-red-400 font-semibold rounded-md'>Confirm Delete</button>
+            <button id="go-back" class="font-semibold">Go Back</button>
+        </div>
+    </div>
 
     <div class="hidden"></div>
     

@@ -64,6 +64,7 @@ updateListForm.addEventListener('submit', async (e) => {
     } else {
         const error = await response.json()
         errorMessage.textContent = error.message
+        errorMessage.classList.remove('hidden')
     }
 })
 

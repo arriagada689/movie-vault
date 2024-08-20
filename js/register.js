@@ -34,6 +34,7 @@ registerForm.addEventListener('submit', async (e) => {
         }
     } catch (error) {
         errorMessage.textContent = error.message
+        errorMessage.classList.remove('hidden')
     }
     
 })

@@ -40,46 +40,54 @@
         </nav>
 
         <!-- Sidebar -->
-        <div id="sidebar" class="fixed top-0 left-0 flex flex-col items-start px-4 space-y-6 text-xl h-full w-full bg-purple-800 text-white font-bold transform -translate-x-full transition-transform duration-300">
+        <div id="sidebar" class="fixed top-0 left-0 flex flex-col items-start px-4 space-y-6 text-xl h-full w-full bg-purple-800 text-white font-bold transform -translate-x-full transition-transform duration-300 z-20">
             <button id="close-sidebar" class="flex items-center gap-x-3 text-white text-xl pt-5"><i class="fa-solid fa-circle-xmark"></i><span class="text-sm">Close</span></button>
             
         </div>
 
-        <form id="home-search-form" action="">
-            <input type="text" class="border-2"/>
-            <button type="submit" class="bg-gray-300">Search</button>
-        </form>
+        <!--Header backdrop-->
+        <div class="relative mx-auto w-full h-[350px] md:h-[400px] z-10">
+            <img id="header-backdrop" src="" alt="backdrop" class="absolute inset-0 w-full h-full object-fill">
+            <div class="absolute inset-0 w-full h-full bg-purple-900 opacity-60"></div>
+            <form id="home-search-form" action="" class="absolute inset-0 flex flex-col items-center justify-center px-3 md:px-0">
+                <div class="text-white w-[80%] text-4xl font-bold text-center">Millions of movies, TV shows and people to discover. Explore now.</div>
+                <div class="flex items-center rounded-3xl bg-white text-black w-full md:w-[80%] mt-3">
+                    <input type="text" class="w-full h-full rounded-l-3xl pl-3 outline-none" placeholder="Search for a movie, tv show, person..."/>
+                    <button type="submit" class="bg-yellow-500 text-white font-semibold py-3 px-4 rounded-3xl">Search</button>
+                </div>
+            </form>
+        </div>
 
         <!--Trending section-->
-        <div class="flex flex-col">
+        <div class="flex flex-col mt-5 ml-2 md:ml-0">
             <div class="flex items-center space-x-3">
                 <div class="text-xl font-bold">Trending</div>
 
-                <div class="flex flex-wrap items-center border border-black rounded-full">
-                    <button id="today-button" class="p-1 rounded-full ">Today</button>
-                    <button id="week-button" class="p-1 rounded-full">This Week</button>
+                <div class="flex flex-wrap items-center border border-black rounded-full mb-2 font-semibold">
+                    <button id="today-button" class="p-1 px-2 rounded-full">Today</button>
+                    <button id="week-button" class="p-1 px-2 rounded-full">This Week</button>
                 </div>
             </div>
 
-            <div id="trending-wrapper" class="flex flex-col md:flex-row flex-wrap"></div>
+            <div id="trending-wrapper" class="flex overflow-x-auto gap-x-3 pb-1"></div>
         </div>
 
         <!--Popular section-->
-        <div class="flex flex-col">
+        <div class="flex flex-col pb-10 mt-5 ml-2 md:ml-0">
             <div class="flex items-center space-x-3">
                 <div class="text-xl font-bold">Popular</div>
 
-                <div class="flex items-center border border-black rounded-full">
-                    <button id="movie-button" class="p-1 rounded-full">Movies</button>
-                    <button id="tv-button" class="p-1 rounded-full">TV Shows</button>
-                    <button id="people-button" class="p-1 rounded-full">People</button>
+                <div class="flex items-center border border-black rounded-full mb-2 font-semibold">
+                    <button id="movie-button" class="p-1 px-2 rounded-full">Movies</button>
+                    <button id="tv-button" class="p-1 px-2 rounded-full">TV Shows</button>
+                    <button id="people-button" class="p-1 px-2 rounded-full">People</button>
                 </div>
             </div>
 
-            <div id="popular-wrapper" class="flex flex-col md:flex-row flex-wrap"></div>
+            <div id="popular-wrapper" class="flex overflow-x-auto gap-x-3 pb-1"></div>
         </div>
 
-        <div class="hidden h-5 w-5 h-[50px] w-[50px] bg-blue-300 h-[100px] w-[100px] border-b border-white h-[1px] bg-white"></div>
+        <div class="hidden h-[305px] top-2 right-[-100px]  group-hover:right-0 overflow-x-hidden flex-grow text-gray-700 h-5 w-5 h-[50px] w-[50px] bg-blue-300 h-[100px] w-[100px] border-b border-white h-[1px] bg-white h-[225px] w-[150px] rounded-lg rounded-t-lg line-clamp-2 absolute right-[-100%] top-1/2 transform -translate-y-1/2 transition-all duration-300 group-hover:right-2"></div>
     </div>
     
     <script type="module" src="js/script.js"></script>

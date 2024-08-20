@@ -7,6 +7,10 @@ const token = localStorage.getItem('userInfo')
 ? JSON.parse(localStorage.getItem('userInfo')).token
 : '' 
 
+//prefill username using local storage
+const usernameBox = document.getElementById('username')
+usernameBox.value = JSON.parse(localStorage.getItem('userInfo')).username
+
 updateProfileForm.addEventListener('submit', async (e) => {
     e.preventDefault()
     const formData = new FormData(updateProfileForm);
@@ -32,5 +36,6 @@ updateProfileForm.addEventListener('submit', async (e) => {
     } else {
         const error = await response.json()
         errorMessage.textContent = error.message
+        errorMessage.classList.remove('hidden')
     }
 })
