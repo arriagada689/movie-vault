@@ -37,33 +37,41 @@
         <button id="close-sidebar" class="flex items-center gap-x-3 text-white text-xl pt-5"><i class="fa-solid fa-circle-xmark"></i><span class="text-sm">Close</span></button>
     </div>
 
-    <!--Filter section-->
-    <div class="flex items-center space-x-5">
-        <button id="filter-btn" value="airing_today">Airing Today</button>
-        <button id="filter-btn" value="popular">Popular</button>
-        <button id="filter-btn" value="on_the_air">On TV</button>
-        <button id="filter-btn" value="top_rated">Top Rated</button>
+    <div class="bg-purple-700 p-3 py-8 flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0">
+        <!--Filter section-->
+        <div>
+            <div id="header-div" class="font-semibold text-gray-200 mb-3 text-2xl"></div>
+            <div class="flex items-center space-x-3 md:space-x-5">
+                <button id="filter-btn" value="airing_today" class="bg-yellow-400 p-2 rounded-xl text-white font-semibold hover:bg-yellow-300">Airing Today</button>
+                <button id="filter-btn" value="popular" class="bg-yellow-400 p-2 rounded-xl text-white font-semibold hover:bg-yellow-300">Popular</button>
+                <button id="filter-btn" value="on_the_air" class="bg-yellow-400 p-2 rounded-xl text-white font-semibold hover:bg-yellow-300">On TV</button>
+                <button id="filter-btn" value="top_rated" class="bg-yellow-400 p-2 rounded-xl text-white font-semibold hover:bg-yellow-300">Top Rated</button>
+            </div>
+        </div>
+
+        <!--Sorting dropdown-->
+        <div>
+            <div class="font-semibold text-gray-300 mb-1">Sort results by</div>
+            <select id="sorting-metric-dropdown" class="rounded-lg py-2 font-semibold">
+                <option value="popularity_desc">Popularity (Descending)</option>
+                <option value="popularity_asc">Popularity (Ascending)</option>
+                <option value="rating_desc">Rating (Descending)</option>
+                <option value="rating_asc">Rating (Ascending)</option>
+                <option value="release_date_desc">Release Date (Descending)</option>
+                <option value="release_date_asc">Release Date (Ascending)</option>
+                <option value="title_desc">Title (A-Z)</option>
+                <option value="title_asc">Title (Z-A)</option>
+            </select>
+        </div>
     </div>
 
-    <!--Sorting dropdown-->
-    <select id="sorting-metric-dropdown">
-        <option value="popularity_desc">Popularity (Descending)</option>
-        <option value="popularity_asc">Popularity (Ascending)</option>
-        <option value="rating_desc">Rating (Descending)</option>
-        <option value="rating_asc">Rating (Ascending)</option>
-        <option value="release_date_desc">Release Date (Descending)</option>
-        <option value="release_date_asc">Release Date (Ascending)</option>
-        <option value="title_desc">Title (A-Z)</option>
-        <option value="title_asc">Title (Z-A)</option>
-    </select>
-
     <!--Results container-->
-    <div id="results-container" class="flex flex-wrap gap-y-3">
+    <div id="results-container" class="flex gap-3 flex-wrap justify-around md:justify-start mt-3">
         
     </div>
 
     <!--Show more button-->
-    <div id="show-more-btn">
+    <div class="flex items-center justify-center md:justify-start space-x-2 my-8" id="show-more-btn">
 
     </div>
 

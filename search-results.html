@@ -38,29 +38,38 @@
         <button id="close-sidebar" class="flex items-center gap-x-3 text-white text-xl pt-5"><i class="fa-solid fa-circle-xmark"></i><span class="text-sm">Close</span></button>
     </div>
     
-    <form id="search-form" action="">
-        <input type="text" class="border-2"/>
-        <button type="submit" class="bg-gray-300">Search</button>
-    </form>
+    <div class="bg-purple-700 p-3 space-y-3">
+        <form id="search-form" action="">
+            <div class="flex items-center rounded-3xl bg-white text-black w-full md:w-[450px] mt-3">
+                <input type="text" class="w-full h-full rounded-l-3xl pl-3 outline-none" placeholder="Search for a movie, tv show, person..."/>
+                <button type="submit" class="bg-yellow-500 text-white font-semibold py-3 px-4 rounded-3xl">Search</button>
+            </div>
+        </form>
 
-    <!--Filter button section-->
-    <div class="flex items-center space-x-3 mt-5">
-        <button class="bg-blue-400 p-2" id="type-button" value="movie">Movie</button>
-        <button class="bg-blue-400 p-2" id="type-button" value="tv">TV Show</button>
-        <button class="bg-blue-400 p-2" id="type-button" value="person">People</button>
+        <div class="">
+            <div class="font-semibold text-gray-300">Results for</div>
+            <div class="font-semibold text-gray-200 text-2xl" id="results-for"></div>
+        </div>
+
+        <!--Filter button section-->
+        <div class="flex items-center space-x-3 ">
+            <button class="bg-yellow-400 p-2 rounded-xl text-white font-semibold hover:bg-yellow-300" id="type-button" value="movie">Movie</button>
+            <button class="bg-yellow-400 p-2 rounded-xl text-white font-semibold hover:bg-yellow-300" id="type-button" value="tv">TV Show</button>
+            <button class="bg-yellow-400 p-2 rounded-xl text-white font-semibold hover:bg-yellow-300" id="type-button" value="person">People</button>
+        </div>
     </div>
 
-    <div>search results</div>
-
     <!--Search results wrapper-->
-    <div id="search-results-wrapper" class="flex flex-col">
+    <div id="search-results-wrapper" class="flex gap-3 flex-wrap justify-around md:justify-start mt-3">
         
     </div>
 
     <!--Pagination buttons wrapper-->
-    <div class="flex items-center space-x-2" id="pagination-buttons-wrapper">
+    <div class="flex items-center justify-center md:justify-start space-x-2 my-8" id="pagination-buttons-wrapper">
 
     </div>
+
+    <div class="hidden bg-yellow-600"></div>
     
 
     <script type="module" src="js/search-results.js"></script>

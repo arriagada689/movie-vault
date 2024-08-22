@@ -52,7 +52,7 @@
             <form id="home-search-form" action="" class="absolute inset-0 flex flex-col items-center justify-center px-3 md:px-0">
                 <div class="text-white w-[80%] text-4xl font-bold text-center">Millions of movies, TV shows and people to discover. Explore now.</div>
                 <div class="flex items-center rounded-3xl bg-white text-black w-full md:w-[80%] mt-3">
-                    <input type="text" class="w-full h-full rounded-l-3xl pl-3 outline-none" placeholder="Search for a movie, tv show, person..."/>
+                    <input type="text" class="w-full h-full rounded-l-3xl pl-3 outline-none" placeholder="Search for a movie, tv show, person..." required/>
                     <button type="submit" class="bg-yellow-500 text-white font-semibold py-3 px-4 rounded-3xl">Search</button>
                 </div>
             </form>
@@ -60,7 +60,7 @@
 
         <!--Trending section-->
         <div class="flex flex-col mt-5 ml-2 md:ml-0">
-            <div class="flex items-center space-x-3">
+            <div class="flex space-x-3">
                 <div class="text-xl font-bold">Trending</div>
 
                 <div class="flex flex-wrap items-center border border-black rounded-full mb-2 font-semibold">
@@ -74,7 +74,7 @@
 
         <!--Popular section-->
         <div class="flex flex-col pb-10 mt-5 ml-2 md:ml-0">
-            <div class="flex items-center space-x-3">
+            <div class="flex space-x-3">
                 <div class="text-xl font-bold">Popular</div>
 
                 <div class="flex items-center border border-black rounded-full mb-2 font-semibold">
@@ -87,7 +87,7 @@
             <div id="popular-wrapper" class="flex overflow-x-auto gap-x-3 pb-1"></div>
         </div>
 
-        <div class="hidden h-[305px] top-2 right-[-100px]  group-hover:right-0 overflow-x-hidden flex-grow text-gray-700 h-5 w-5 h-[50px] w-[50px] bg-blue-300 h-[100px] w-[100px] border-b border-white h-[1px] bg-white h-[225px] w-[150px] rounded-lg rounded-t-lg line-clamp-2 absolute right-[-100%] top-1/2 transform -translate-y-1/2 transition-all duration-300 group-hover:right-2"></div>
+        <div class="hidden flex-shrink-0 h-[305px] top-2 right-[-100px] group-hover:right-0 overflow-x-hidden flex-grow text-gray-700 h-5 w-5 h-[50px] w-[50px] bg-blue-300 h-[100px] w-[100px] border-b border-white h-[1px] bg-white h-[225px] w-[150px] rounded-lg rounded-t-lg line-clamp-2 absolute right-[-100%] top-1/2 transform -translate-y-1/2 transition-all duration-300 group-hover:right-2"></div>
     </div>
     
     <script type="module" src="js/script.js"></script>
