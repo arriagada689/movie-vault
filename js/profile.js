@@ -3,7 +3,9 @@ import config from './utils/config.js'
 const userListsContainer = document.querySelector('#user-lists-container')
 const favoritesContainer = document.querySelector('#favorites-container')
 const username = document.querySelector('#username')
-username.textContent = JSON.parse(localStorage.getItem('userInfo')).username
+username.innerHTML = `
+    <div class="">List by: <span class="text-blue-500 font-semibold ml-2">${JSON.parse(localStorage.getItem('userInfo')).username}</span</div>
+`
 
 const token = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')).token : ''
 
@@ -37,8 +39,9 @@ function displayLists(lists){
 
     userListsContainer.innerHTML = lists.map(list => {
         return `
-            <a href="/list.html?id=${list._id}">
-                ${list.name}
+            <a href="/list.html?id=${list._id}" class="border-b border-gray-500 h-[60px] w-[90%]">
+                <div class="font-bold hover:text-blue-700 line-clamp-1">${list.name}</div>
+                <div># of items: ${list.list_items.length}</div>
             </a>
         `
     }).join('')

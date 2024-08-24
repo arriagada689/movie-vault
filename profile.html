@@ -38,23 +38,25 @@
         <button id="close-sidebar" class="flex items-center gap-x-3 text-white text-xl pt-5"><i class="fa-solid fa-circle-xmark"></i><span class="text-sm">Close</span></button>
     </div>
 
-    <div class="text-center text-xl font-bold">Profile</div>
-    <div id="username" class="text-center text-blue-500"></div>
-    <div class="flex justify-center gap-x-3">
-        <a href="update-profile.html" class="bg-green-300">Update Profile</a>
-        <a href="delete-profile.html" class="bg-red-300">Delete Profile</a>
+    <div class="bg-purple-700 text-white p-3 space-y-4">
+        <div class="text-4xl font-bold">Profile</div>
+        <div id="username"></div>
+        <div class="flex gap-x-3">
+            <a href="update-profile.html" class="bg-blue-800 py-2 w-[150px] rounded-xl font-semibold hover:bg-blue-700 text-center">Update Profile</a>
+            <a href="delete-profile.html" class="bg-red-600 py-2 w-[150px] rounded-xl font-semibold hover:bg-red-500 text-center">Delete Profile</a>
+        </div>
     </div>
 
-    <div class="flex">
+    <div class="flex flex-col md:flex-row">
         <div class="w-1/4">
-            <div class="text-lg font-bold">Lists</div>
+            <div class="text-2xl font-bold">Lists</div>
             <div class="flex flex-col" id="user-lists-container">
 
             </div>
         </div>
 
         <div class="w-3/4">
-            <div class="text-lg font-bold">Favorites</div>
+            <div class="text-2xl font-bold">Favorites</div>
             <div class="flex gap-x-3">
                 <div class="flex">Movies:<div id="movie-count"></div></div>
                 <div class="flex">TV Shows:<div id="tv-count"></div></div>
@@ -73,7 +75,7 @@
         </div>
     </div>
 
-    <div class="hidden"></div>
+    <div class="hidden w-[90%]"></div>
     
     <script type="module" src="js/protect.js"></script>
     <script type="module" src="js/profile.js"></script>

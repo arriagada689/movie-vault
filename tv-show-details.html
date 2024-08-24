@@ -6,7 +6,7 @@
     <title>Movie Vault</title>
     <link rel="stylesheet" href="css/main.css">
 </head>
-<body class="container mx-auto">
+<body class="container mx-auto pb-10">
     <!--Desktop Navbar-->
     <nav class="hidden md:flex justify-between items-center h-[60px] px-2 md:px-0 font-semibold">
         <!--Left side-->
@@ -33,37 +33,56 @@
     </nav>
 
     <!-- Sidebar -->
-    <div id="sidebar" class="fixed top-0 left-0 flex flex-col items-start px-4 space-y-6 text-xl h-full w-full bg-purple-800 text-white font-bold transform -translate-x-full transition-transform duration-300">
+    <div id="sidebar" class="fixed top-0 left-0 flex flex-col items-start px-4 space-y-6 text-xl h-full w-full bg-purple-800 text-white font-bold transform -translate-x-full transition-transform duration-300 z-20">
         <button id="close-sidebar" class="flex items-center gap-x-3 text-white text-xl pt-5"><i class="fa-solid fa-circle-xmark"></i><span class="text-sm">Close</span></button>
     </div>
 
-    <div class="flex">
-        <img id="main-img" src="" alt="" class="h-[50px] w-[50px]">
+    <div class="flex bg-purple-700 flex-col md:flex-row p-3 gap-x-5">
+        <img id="main-img" src="" alt="" class="w-[200px] h-[300px] md:w-[300px] md:h-[450px] flex-shrink-0 rounded-lg mx-auto md:mx-0">
 
-        <div class="flex flex-col">
-            <div id="name"></div>
+        <div class="flex flex-col text-white">
+            <div class="font-bold text-4xl" id="name"></div>
             <div id="release_date"></div>
-            <div id="genres"></div>
+            <div class="flex items-baseline space-x-2 font-semibold" id="genres"></div>
+
+            <!--Backend Section-->
+            <div class="flex items-center space-x-5 my-5">
+                <button id="favorite-btn" class="bg-blue-900 h-10 w-10 rounded-full relative group"></button>
+
+                <div class="relative">
+                    <button id="add-to-list-btn" class="bg-blue-900 h-10 w-10 rounded-full relative group">
+                        <i class="fa-solid fa-list-ul text-lg"></i>
+                        <span class="group-hover:block hidden absolute -top-8 left-1/2 -translate-x-1/2 bg-blue-900 text-white text-sm p-1 rounded font-semibold text-nowrap">Add to list</span>
+                    </button>
+                    <div id="user-list-container" class="hidden flex-col absolute top-full left-0 mt-2 w-[300px] bg-blue-900 text-white shadow-lg rounded">
+                        
+                    </div> 
+                </div>
+            </div>
+
+            <div class="font-bold text-2xl">Overview</div>
             <div id="overview"></div>
         </div>
-    </div>
-
-    <!--Backend Section-->
-    <div class="">
-        <button id="favorite-btn" class="bg-red-400"></button>
-
-        <div>Add to List</div>
-        <div id="user-list-container" class="flex flex-col w-[400px]">
-
-        </div>  
     </div> 
 
     <!--Cast Section-->
-    <div class="flex flex-col">
+    <div class="flex flex-col ml-2 md:ml-0 mt-5">
         <div class="text-2xl font-bold">Cast</div>
-        <div id="cast-card-container" class="flex flex-wrap">
+        <div id="cast-card-container" class="flex overflow-x-auto gap-x-3 pb-1">
             
         </div>
+
+        <button id="show-all-cast-button" class="w-fit font-semibold hover:scale-105 hover:text-gray-800 mt-2">Show All Cast</button>
+    </div>
+
+    <!--Credits Section-->
+    <div class="flex flex-col ml-2 md:ml-0 mt-5">
+        <div class="text-2xl font-bold">Credits</div>
+        <div id="credits-card-container" class="flex overflow-x-auto gap-x-3 pb-1">
+            
+        </div>
+
+        <button id="show-all-credits-button" class="w-fit font-semibold hover:scale-105 hover:text-gray-800 mt-2">Show All Credits</button>
     </div>
 
     <div class="hidden h-[100px] w-[100px] border"></div>

@@ -67,7 +67,3 @@ updateListForm.addEventListener('submit', async (e) => {
         errorMessage.classList.remove('hidden')
     }
 })
-
-const goBackButton = document.querySelector('#go-back-button')
-goBackButton.href = `/list.html?id=${id}`
-goBackButton.textContent = 'Go Back'

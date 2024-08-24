@@ -1,4 +1,5 @@
 import config from "./utils/config.js"
+import formatDate from "./utils/formatDate.js"
 import getQueryParams from './utils/getQueryParams.js' 
 
 const queryParams = getQueryParams() 
@@ -38,7 +39,9 @@ const listItems = document.querySelector('#list-items')
 
 function displayListDetails(data){
     name.textContent = data.name
-    creator.textContent = JSON.parse(localStorage.getItem('userInfo')).username
+    creator.innerHTML = `
+        List by: <a href="profile.html" class="hover:scale-105 hover:underline font-semibold">${JSON.parse(localStorage.getItem('userInfo')).username}</a>
+    `
     description.textContent = data.description
 }
 
@@ -56,11 +59,21 @@ function displayListItems(items){
             link += `/person-details.html?id=${item.id}`
         }
         const imageUrl = item.image ? `https://image.tmdb.org/t/p/w500/${item.image}` : '../images/no-image-1.png';
+        let subLabel
+        if(item.type === 'Movie' || item.type === 'TV'){
+            subLabel = formatDate(item.release_date || item.first_air_date)
+        } else {
+            subLabel = item.known_for_department
+        }
         return `
-            <a id="list-card-${index}" href="${link}">
-                <img src="${imageUrl}" alt="${item.name || item.title}" class="h-[50px] w-[50px]">
-                ${item.name || item.title}
-                <button id="remove-btn" value="${index}" class="bg-red-400">Remove</button>
+            <a id="list-card-${index}" href="${link}" class="rounded-lg border h-[305px] w-[150px] flex-shrink-0 flex flex-col justify-between relative group overflow-x-hidden relative">
+                <img src="${imageUrl}" alt="${item.name || item.title}" class="h-[225px] w-full rounded-t-lg">
+                <div class="p-1 flex flex-col flex-grow">
+                    <div class="line-clamp-2 font-semibold">${item.name || item.title}</div>
+                    <div class="flex-grow"></div>
+                    <div class="text-gray-700">${subLabel}</div>
+                </div>
+                <button id="remove-btn" value="${index}" class="absolute top-0 right-0 bg-red-400 text-white p-2 hover:bg-red-300 hover:rounded-bl-xl"><i class="fa-solid fa-trash"></i></button>
             </a>
         `
     }).join('')

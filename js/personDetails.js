@@ -2,10 +2,34 @@ import getQueryParams from './utils/getQueryParams.js'
 import config from './utils/config.js'
 import samplePersonDetails from './data/samplePersonDetails.js'
 
+const image = document.querySelector('#main-img')
+const name = document.querySelector('#name')
+const biography = document.querySelector('#biography')
+const actorContainer = document.querySelector('#actor-container')
+const productionContainer = document.querySelector('#production-container')
+const writingContainer = document.querySelector('#writing-container')
+const favoriteButton = document.querySelector('#favorite-btn')
+const token = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')).token : ''
+const userListsContainer = document.querySelector('#user-list-container')
+const listButton = document.getElementById('add-to-list-btn')
+
 const queryParams = getQueryParams()
 const personId = queryParams.id
+let userListDropdown = false
 let personData = ''
 let favoriteStatus = false
+
+//toggle user list dropdown
+listButton.addEventListener('click', () => {
+    userListDropdown = !userListDropdown
+    if(userListDropdown){
+        userListsContainer.classList.remove('hidden')
+        userListsContainer.classList.add('flex')
+    } else {
+        userListsContainer.classList.remove('flex')
+        userListsContainer.classList.add('hidden')
+    }
+})
 
 //fetch initial data
 async function getPersonDetails(){
@@ -29,9 +53,7 @@ async function getPersonDetails(){
     }
 }
 
-const image = document.querySelector('#main-img')
-const name = document.querySelector('#name')
-const biography = document.querySelector('#biography')
+getPersonDetails()
 
 function displayData(data){
     image.src = data.profile_path ? `https://image.tmdb.org/t/p/w500/${data.profile_path}` : '../images/no-image-1.png'
@@ -40,10 +62,6 @@ function displayData(data){
     biography.textContent = data.biography
 }
 
-const actorContainer = document.querySelector('#actor-container')
-const productionContainer = document.querySelector('#production-container')
-const writingContainer = document.querySelector('#writing-container')
-
 function displayCredits(results){
     actorContainer.innerHTML = ''
     productionContainer.innerHTML = ''
@@ -51,47 +69,65 @@ function displayCredits(results){
     //sort cast array based on date
     const actorSortedArray = sortByDate(results.cast)
 
-    const actorHtml = actorSortedArray.slice(0, 10).map((result) => {
-        const link = result.media_type === 'movie' ? `/movie.html?id=${result.id}` : `/tv.html?id=${result.id}`
-        const imageUrl = result.poster_path ? `https://image.tmdb.org/t/p/w500/${result.poster_path}` : '../images/no-image-1.png'
+    actorContainer.innerHTML = actorSortedArray.slice(0, 10).map((result) => {
+        const link = result.media_type === 'movie' ? `/movie-details.html?id=${result.id}` : `/tv-show-details.html?id=${result.id}`
+        let year
+        if(result.release_date) year = result.release_date.substring(0, 4)
+        if(result.first_air_date) year = result.first_air_date.substring(0, 4)
         return `
-            <a href="${link}" class="border">
-                <img src="${imageUrl}" alt="${result.name || result.title}" class="h-[100px] w-[100px]">
-                <div>${result.name || result.title}</div>
-            </a>
+            <div class="flex border-b border-gray-500 w-full h-[60px]">
+                <div class="w-[60px]">${year}</div>
+                <div class="w-screen">
+                    <a href="${link}" class="font-bold hover:text-blue-700 line-clamp-1">${cutOffTitle(result.title || result.name)}</a>
+                    <div class="text-gray-600 line-clamp-1">${result.character ? `as <span class="text-black">${result.character}</span>` : ''}</div>
+                </div>          
+            </div>
         `
     }).join('')
+
+    if(actorSortedArray.length === 0) actorContainer.innerHTML = '<div>No data to display</div>'
 
     const productionArray = results.crew.filter(item => item.department === 'Production');
     const writingArray = results.crew.filter(item => item.department === 'Writing');
     const productionSortedArray = sortByDate(productionArray)
     const writingSortedArray = sortByDate(writingArray)
 
-    const productionHtml = productionSortedArray.slice(0, 10).map((result) => {
-        const link = result.media_type === 'movie' ? `/movie.html?id=${result.id}` : `/tv.html?id=${result.id}`
-        const imageUrl = result.poster_path ? `https://image.tmdb.org/t/p/w500/${result.poster_path}` : '../images/no-image-1.png'
+    productionContainer.innerHTML = productionSortedArray.slice(0, 10).map((result) => {
+        const link = result.media_type === 'movie' ? `/movie-details.html?id=${result.id}` : `/tv-show-details.html?id=${result.id}`
+        let year
+        if(result.release_date) year = result.release_date.substring(0, 4)
+        if(result.first_air_date) year = result.first_air_date.substring(0, 4)
+        // console.log(result);
         return `
-            <a href="${link}" class="border">
-                <img src="${imageUrl}" alt="${result.name || result.title}" class="h-[100px] w-[100px]">
-                <div>${result.name || result.title}</div>
-            </a>
+            <div class="flex border-b border-gray-500 h-[60px]">
+                <div class="w-[60px]">${year}</div>
+                <div>
+                    <a href="${link}" class="font-bold hover:text-blue-700 line-clamp-1">${cutOffTitle(result.title || result.name)}</a>
+                    <div class="text-gray-600 line-clamp-1">${result.job ? `as <span class="text-black">${result.job}</span>` : ''}</div>
+                </div>
+            </div>
         `
     }).join('')
 
-    const writingHtml = writingSortedArray.slice(0, 10).map((result) => {
-        const link = result.media_type === 'movie' ? `/movie.html?id=${result.id}` : `/tv.html?id=${result.id}`
-        const imageUrl = result.poster_path ? `https://image.tmdb.org/t/p/w500/${result.poster_path}` : '../images/no-image-1.png'
-        return `
-            <a href="${link}" class="border">
-                <img src="${imageUrl}" alt="${result.name || result.title}" class="h-[100px] w-[100px]">
-                <div>${result.name || result.title}</div>
-            </a>
-        `
-    })
+    if(productionSortedArray.length === 0) productionContainer.innerHTML = '<div>No data to display</div>'
 
-    actorContainer.innerHTML = actorHtml
-    productionContainer.innerHTML = productionHtml
-    writingContainer.innerHTML = writingHtml
+    writingContainer.innerHTML = writingSortedArray.slice(0, 10).map((result) => {
+        const link = result.media_type === 'movie' ? `/movie-details.html?id=${result.id}` : `/tv-show-details.html?id=${result.id}`
+        let year
+        if(result.release_date) year = result.release_date.substring(0, 4)
+        if(result.first_air_date) year = result.first_air_date.substring(0, 4)
+        return `
+            <div class="flex border-b border-gray-500 h-[60px]">
+                <div class="w-[60px]">${year || ''}</div>
+                <div>
+                    <a href="${link}" class="font-bold hover:text-blue-700 line-clamp-1">${cutOffTitle(result.title || result.name)}</a>
+                    <div class="text-gray-600 line-clamp-1">${result.job ? `as <span class="text-black">${result.job}</span>` : ''}</div>
+                </div>
+            </div>
+        `
+    }).join('')
+
+    if(writingSortedArray.length === 0) writingContainer.innerHTML = '<div>No data to display</div>'
 }
 
 function sortByDate(arr){
@@ -106,13 +142,6 @@ function sortByDate(arr){
         return 0;
     })
 }
-
-getPersonDetails()
-
-//add to favorites section
-const favoriteButton = document.querySelector('#favorite-btn')
-
-const token = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')).token : ''
 
 favoriteButton.addEventListener('click', async () => {
     if(localStorage.getItem('userInfo') && !favoriteStatus){
@@ -181,9 +210,15 @@ async function checkFavoriteStatus() {
 //change the button in the frontend based on favorite status
 function setFavoriteButton(){
     if(favoriteStatus){
-        favoriteButton.textContent = 'Remove from Favorites'
+        favoriteButton.innerHTML = `<i class="fa-solid fa-heart text-lg"></i>
+                                    <span class="hidden group-hover:flex absolute -top-8 left-1/2 -translate-x-1/2 bg-blue-900 text-white text-sm p-1 rounded font-semibold text-nowrap">
+                                        Add to favorites
+                                    </span>`
     } else {
-        favoriteButton.textContent = 'Add to Favorites'
+        favoriteButton.innerHTML = `<i class="fa-regular fa-heart text-lg"></i>
+                                    <span class="hidden group-hover:flex absolute -top-8 left-1/2 -translate-x-1/2 bg-blue-900 text-white text-sm p-1 rounded font-semibold text-nowrap">
+                                        Remove from favorites
+                                    </span>`
     }
 }
 
@@ -203,19 +238,23 @@ async function getUserList(){
     }
 }
 
-const userListsContainer = document.querySelector('#user-list-container')
-
 function displayUserLists(lists){
     userListsContainer.innerHTML = ''
 
-    userListsContainer.innerHTML = lists.map((list, index) => {
+    let htmlContent = `
+        <a href="create-list.html" class="w-full flex justify-between p-2 ${lists.length > 0 ? 'border-b' : ''}">Create List</a>
+    `;
+
+    htmlContent += lists.map((list, index) => {
         return `
-            <button id="list-btn" value="${index}" class="w-full flex justify-between p-2 border">
+            <button id="list-btn" value="${index}" class="w-full flex justify-between p-2 ${index !== lists.length - 1 ? 'border-b' : ''}">
                 <div>${list.name}</div>
-                <div>${list.status}</div>
+                <div>${list.status ? 'Remove' : 'Add'}</div>
             </button>
         `
     }).join('')
+
+    userListsContainer.innerHTML = htmlContent
 
     document.querySelectorAll('#list-btn').forEach(button => {
         button.addEventListener('click', (e) => {
@@ -228,7 +267,7 @@ function displayUserLists(lists){
                 removePersonFromList(lists[index]._id)
             }
             lists[index].status = lists[index].status ? false : true
-            button.childNodes[3].textContent = lists[index].status
+            button.childNodes[3].textContent = lists[index].status ? 'Remove' : 'Add'
         })
     })
 }
@@ -276,4 +315,11 @@ async function removePersonFromList(list_id){
         const error = await response.json()
         console.log(error);
     }
+}
+
+function cutOffTitle(str){
+    if(str.length > 40 && window.innerWidth <= 430){
+        return str.substring(0, 40) + '...'
+    }
+    return str
 }

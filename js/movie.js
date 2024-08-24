@@ -71,9 +71,11 @@ function displayResults(results){
         return `
             <a href="${link}" class="rounded-lg border h-[305px] w-[150px] flex-shrink-0 flex flex-col justify-between relative group overflow-x-hidden">
                 <img src="${imageUrl}" alt="${result.title}" class="h-[225px] w-full rounded-t-lg">
-                <div class="line-clamp-2 font-semibold">${result.title}</div>
-                <div class="flex-grow"></div>
-                <div class="text-gray-700">${subLabel}</div>
+                <div class="p-1 flex flex-col flex-grow">
+                    <div class="line-clamp-2 font-semibold">${result.title}</div>
+                    <div class="flex-grow"></div>
+                    <div class="text-gray-700">${subLabel}</div>
+                </div>
                 <button id="favorite-btn" data-action="${result.favorite_status ? 'Remove' : 'Add'}" value="${index}" class="bg-red-400 absolute top-2 right-[-100px] transition-all duration-300 group-hover:right-0 p-2">${result.favorite_status ? '<i class="fa-solid fa-heart text-white text-xl"></i>' : '<i class="fa-regular fa-heart text-white text-xl"></i>'}</button>
             </a>
         `

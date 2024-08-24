@@ -33,51 +33,61 @@
     </nav>
 
     <!-- Sidebar -->
-    <div id="sidebar" class="fixed top-0 left-0 flex flex-col items-start px-4 space-y-6 text-xl h-full w-full bg-purple-800 text-white font-bold transform -translate-x-full transition-transform duration-300">
+    <div id="sidebar" class="fixed top-0 left-0 flex flex-col items-start px-4 space-y-6 text-xl h-full w-full bg-purple-800 text-white font-bold transform -translate-x-full transition-transform duration-300 z-20">
         <button id="close-sidebar" class="flex items-center gap-x-3 text-white text-xl pt-5"><i class="fa-solid fa-circle-xmark"></i><span class="text-sm">Close</span></button>
     </div>
 
-    <div class="flex">
-        <img id="main-img" src="" alt="" class="h-[50px] w-[50px]">
+    <div class="flex bg-purple-700 flex-col md:flex-row p-3 gap-x-5">
+        <img id="main-img" src="" alt="" class="w-[200px] h-[300px] md:w-[300px] md:h-[450px] flex-shrink-0 rounded-lg mx-auto md:mx-0">
 
-        <div class="flex flex-col">
-            <div id="name"></div>
+        <div class="flex flex-col text-white">
+            <div class="font-bold text-4xl" id="name"></div>
+
+            <!--Backend Section-->
+            <div class="flex items-center space-x-5 my-5">
+                <button id="favorite-btn" class="bg-blue-900 h-10 w-10 rounded-full relative group"></button>
+
+                <div class="relative">
+                    <button id="add-to-list-btn" class="bg-blue-900 h-10 w-10 rounded-full relative group z-10">
+                        <i class="fa-solid fa-list-ul text-lg"></i>
+                        <span class="group-hover:block hidden absolute -top-8 left-1/2 -translate-x-1/2 bg-blue-900 text-white text-sm p-1 rounded font-semibold text-nowrap">Add to list</span>
+                    </button>
+                    <div id="user-list-container" class="hidden flex-col absolute top-full left-0 mt-2 w-[300px] bg-blue-900 text-white shadow-lg rounded">
+                        
+                    </div> 
+                </div>
+            </div>
+
+            <div class="font-bold text-2xl">Biography</div>
             <div id="biography"></div>
         </div>
     </div>
 
-    <!--Backend Section-->
-    <div class="">
-        <button id="favorite-btn" class="bg-red-400"></button>
-
-        <div>Add to List</div>
-        <div id="user-list-container" class="flex flex-col w-[400px]">
-
-        </div> 
-    </div> 
-
     <!--Credits Section-->
-    <div class="flex flex-col">
+    <div class="flex flex-col mt-3 ml-2 md:ml-0 space-y-5">
         <div class="text-2xl font-bold">Credits</div>
 
-        <div class="text-lg font-bold">Acting</div>
-        <div id="actor-container" class="flex flex-wrap">
-            
+        <div>
+            <div class="text-lg font-bold mb-2">Acting</div>
+            <div id="actor-container" class="flex flex-col w-full md:w-[80%]">
+            </div>
         </div>
 
-        <div class="text-lg font-bold">Production</div>
-        <div id="production-container" class="flex flex-wrap">
-            
+        <div>
+            <div class="text-lg font-bold mb-2">Production</div>
+            <div id="production-container" class="flex flex-col md:w-[80%]">
+            </div>
         </div>
 
-        <div class="text-lg font-bold">Writing</div>
-        <div id="writing-container" class="flex flex-wrap">
-            
+        <div>
+            <div class="text-lg font-bold mb-2">Writing</div>
+            <div id="writing-container" class="flex flex-col md:w-[80%]">
+            </div>
         </div>
 
     </div>
 
-    <div class="hidden h-[100px] w-[100px] border"></div>
+    <div class="hidden h-[100px] w-[100px] border text-gray-600 hover:text-blue-700 h-[55px] border-gray-500 w-[60px]"></div>
     
     <script type="module" src="js/personDetails.js"></script>
     <script type="module" src="js/navbar.js"></script>
