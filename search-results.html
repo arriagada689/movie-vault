@@ -40,8 +40,8 @@
     
     <div class="bg-purple-700 p-3 space-y-3">
         <form id="search-form" action="">
-            <div class="flex items-center rounded-3xl bg-white text-black w-full md:w-[450px] mt-3">
-                <input type="text" class="w-full h-full rounded-l-3xl pl-3 outline-none" placeholder="Search for a movie, tv show, person..."/>
+            <div class="flex items-center rounded-3xl bg-white text-black w-[70%] md:w-[40%] mt-3 transition-all duration-300 focus-within:w-full md:focus-within:w-[60%] focus-within:shadow-xl">
+                <input id="main-search-bar" type="text" class="w-full h-full rounded-l-3xl pl-3 outline-none" placeholder="Search..." required/>
                 <button type="submit" class="bg-yellow-500 text-white font-semibold py-3 px-4 rounded-3xl">Search</button>
             </div>
         </form>
@@ -56,6 +56,7 @@
             <button class="bg-yellow-400 p-2 rounded-xl text-white font-semibold hover:bg-yellow-300" id="type-button" value="movie">Movie</button>
             <button class="bg-yellow-400 p-2 rounded-xl text-white font-semibold hover:bg-yellow-300" id="type-button" value="tv">TV Show</button>
             <button class="bg-yellow-400 p-2 rounded-xl text-white font-semibold hover:bg-yellow-300" id="type-button" value="person">People</button>
+            <button id="x-btn" value="" class="hidden bg-yellow-400 p-2 rounded-xl text-white font-semibold hover:bg-yellow-300"><i class="fa-solid fa-x"></i></button>
         </div>
     </div>
 

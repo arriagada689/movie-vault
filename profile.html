@@ -40,36 +40,37 @@
 
     <div class="bg-purple-700 text-white p-3 space-y-4">
         <div class="text-4xl font-bold">Profile</div>
-        <div id="username"></div>
+        <div id="username" class="text-blue-500 font-semibold text-2xl"></div>
         <div class="flex gap-x-3">
             <a href="update-profile.html" class="bg-blue-800 py-2 w-[150px] rounded-xl font-semibold hover:bg-blue-700 text-center">Update Profile</a>
             <a href="delete-profile.html" class="bg-red-600 py-2 w-[150px] rounded-xl font-semibold hover:bg-red-500 text-center">Delete Profile</a>
         </div>
     </div>
 
-    <div class="flex flex-col md:flex-row">
-        <div class="w-1/4">
+    <div class="flex flex-col md:flex-row ml-2 md:ml-2 space-y-8 md:space-y-0">
+        <div class="md:w-1/4">
             <div class="text-2xl font-bold">Lists</div>
             <div class="flex flex-col" id="user-lists-container">
 
             </div>
         </div>
 
-        <div class="w-3/4">
+        <div class="md:w-3/4">
             <div class="text-2xl font-bold">Favorites</div>
             <div class="flex gap-x-3">
-                <div class="flex">Movies:<div id="movie-count"></div></div>
-                <div class="flex">TV Shows:<div id="tv-count"></div></div>
-                <div class="flex">People:<div id="person-count"></div></div>
+                <div class="h-[60px] w-fit">Movies:<div class="text-blue-400 font-bold text-3xl" id="movie-count"></div></div>
+                <div class="h-[60px] w-fit">TV Shows:<div class="text-blue-400 font-bold text-3xl" id="tv-count"></div></div>
+                <div class="h-[60px] w-fit">People:<div class="text-blue-400 font-bold text-3xl" id="person-count"></div></div>
             </div>
 
             <div class="flex flex-wrap gap-2 my-2" id="filter-buttons-container">
-                <button id="filter-btn" value="Movie" class="bg-blue-300">Movies</button>
-                <button id="filter-btn" value="TV" class="bg-blue-300">TV Shows</button>
-                <button id="filter-btn" value="Person" class="bg-blue-300">People</button>
+                <button id="filter-btn" value="Movie" class="bg-yellow-400 p-2 rounded-xl text-white font-semibold hover:bg-yellow-300">Movies</button>
+                <button id="filter-btn" value="TV" class="bg-yellow-400 p-2 rounded-xl text-white font-semibold hover:bg-yellow-300">TV Shows</button>
+                <button id="filter-btn" value="Person" class="bg-yellow-400 p-2 rounded-xl text-white font-semibold hover:bg-yellow-300">People</button>
+                <button id="x-btn" value="" class="hidden bg-yellow-400 p-2 rounded-xl text-white font-semibold hover:bg-yellow-300"><i class="fa-solid fa-x"></i></button>
             </div>
 
-            <div class="flex flex-col" id="favorites-container">
+            <div class="flex gap-3 flex-wrap justify-around md:justify-start mt-3" id="favorites-container">
                 
             </div>
         </div>

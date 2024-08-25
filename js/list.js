@@ -66,7 +66,7 @@ function displayListItems(items){
             subLabel = item.known_for_department
         }
         return `
-            <a id="list-card-${index}" href="${link}" class="rounded-lg border h-[305px] w-[150px] flex-shrink-0 flex flex-col justify-between relative group overflow-x-hidden relative">
+            <a id="list-card-${index}" href="${link}" class="rounded-lg border h-[305px] w-[150px] flex-shrink-0 flex flex-col justify-between relative group overflow-x-hidden">
                 <img src="${imageUrl}" alt="${item.name || item.title}" class="h-[225px] w-full rounded-t-lg">
                 <div class="p-1 flex flex-col flex-grow">
                     <div class="line-clamp-2 font-semibold">${item.name || item.title}</div>

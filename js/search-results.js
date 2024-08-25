@@ -8,6 +8,7 @@ const searchResultsWrapper = document.querySelector('#search-results-wrapper')
 const homeSearchForm = document.querySelector('#search-form')
 const paginationButtonsWrapper = document.querySelector('#pagination-buttons-wrapper')
 const typeButtons = document.querySelectorAll('#type-button')
+const xButton = document.getElementById('x-btn')
 
 const queryParams = getQueryParams()
 const searchQuery = queryParams.query
@@ -132,6 +133,14 @@ typeButtons.forEach((typeButton) => {
     })
 })
 
+//make x button appear if filter clicked
+if(type.length > 0){
+    xButton.classList.remove('hidden')
+}
+xButton.addEventListener('click', () => {
+    window.location.href = `search-results.html?query=${encodeURIComponent(queryParams.query)}`
+})
+
 //pagination (create button dynamically and append to wrapper)
 function setPagination(num) {
     paginationButtonsWrapper.innerHTML = ''
@@ -172,3 +181,11 @@ async function getPredisplayData(results){
 
 const resultsForDiv = document.getElementById('results-for')
 resultsForDiv.textContent = '"'  + searchQuery + '"'
+
+const mainSearchBar = document.getElementById('main-search-bar')
+mainSearchBar.addEventListener('focus', () => {
+    mainSearchBar.placeholder = ''
+})
+mainSearchBar.addEventListener('blur', () => {
+    mainSearchBar.placeholder = 'Search ...'
+})

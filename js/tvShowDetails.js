@@ -32,7 +32,7 @@ showAllCastButton.addEventListener('click', () => {
     if(seeAllCast){
         castCardContainer.className = 'flex gap-3 flex-wrap justify-around md:justify-start mt-3'
     } else {
-        castCardContainer.className = "flex overflow-x-auto gap-x-3 pb-1"
+        castCardContainer.className = "flex overflow-x-auto custom-scrollbar gap-x-3 pb-1"
     }
     //change button text
     showAllCastButton.textContent = seeAllCast ? 'Close' : 'Show All Cast'
@@ -47,7 +47,7 @@ showAllCreditsButton.addEventListener('click', () => {
     if(seeAllCredits){
         creditsCardContainer.className = 'flex gap-3 flex-wrap justify-around md:justify-start mt-3'
     } else {
-        creditsCardContainer.className = "flex overflow-x-auto gap-x-3 pb-1"
+        creditsCardContainer.className = "flex overflow-x-auto custom-scrollbar gap-x-3 pb-1"
     }
     //change button text
     showAllCreditsButton.textContent = seeAllCredits ? 'Close' : 'Show All Cast'

@@ -1,14 +1,21 @@
 import config from '../js/utils/config.js'
 import formatDate from './utils/formatDate.js';
 import { addItemToFavorites, removeItemFromFavorites } from './utils/favorite.js';
+import { Spinner } from './loading-spinner.js';
+
+Spinner()
+Spinner.show()
 
 //awake server
 const loadingDiv = document.querySelector('#awake')
+const mainDiv = document.getElementById('main-div')
 const awake = await fetch(`${config.apiBaseUrl}/users/awake`)
 if(awake.ok){
     const data = await awake.json()
     if(data === 'awake'){
         loadingDiv.classList.add('hidden')
+        mainDiv.className = 'container mx-auto'
+        Spinner.hide()
     }
 }
 
@@ -315,3 +322,11 @@ function setBackdropImage(results) {
     //set src to image
     backdropImage.src = randomImage ? `https://image.tmdb.org/t/p/w500/${randomImage}` : '../images/no-image-1.png'
 }
+
+const mainSearchBar = document.getElementById('main-search-bar')
+mainSearchBar.addEventListener('focus', () => {
+    mainSearchBar.placeholder = ''
+})
+mainSearchBar.addEventListener('blur', () => {
+    mainSearchBar.placeholder = 'Search ...'
+})

@@ -1,11 +1,13 @@
 import config from './utils/config.js'
+import formatDate from './utils/formatDate.js'
 
 const userListsContainer = document.querySelector('#user-lists-container')
 const favoritesContainer = document.querySelector('#favorites-container')
 const username = document.querySelector('#username')
-username.innerHTML = `
-    <div class="">List by: <span class="text-blue-500 font-semibold ml-2">${JSON.parse(localStorage.getItem('userInfo')).username}</span</div>
-`
+username.textContent = JSON.parse(localStorage.getItem('userInfo')).username
+// username.innerHTML = `
+//     <div class="">List by: <span class="text-blue-500 font-semibold ml-2">${JSON.parse(localStorage.getItem('userInfo')).username}</span</div>
+// `
 
 const token = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')).token : ''
 
@@ -60,11 +62,21 @@ function displayFavorites(favorites){
             link += `/person-details.html?id=${item.id}`
         }
         const imageUrl = item.image ? `https://image.tmdb.org/t/p/w500/${item.image}` : '../images/no-image-1.png';
+        let subLabel
+        if(item.type === 'Movie' || item.type === 'TV'){
+            subLabel = formatDate(item.release_date || item.first_air_date)
+        } else {
+            subLabel = item.known_for_department
+        }
         return `
-            <a href="${link}" class="border">
-                <img src="${imageUrl}" alt="${item.name || item.title}" class="w-[50px] h-[50px]">
-                ${item.name || item.title}
-                <button class="bg-red-300" id="favorite-delete-btn" value="${index}">Delete</button>
+            <a href="${link}" class="rounded-lg border h-[305px] w-[150px] flex-shrink-0 flex flex-col justify-between relative group overflow-x-hidden">
+                <img src="${imageUrl}" alt="${item.name || item.title}" class="h-[225px] w-full rounded-t-lg">
+                <div class="p-1 flex flex-col flex-grow">
+                    <div class="line-clamp-2 font-semibold">${item.name || item.title}</div>
+                    <div class="flex-grow"></div>
+                    <div class="text-gray-700">${subLabel}</div>
+                </div>
+                <button class="absolute top-0 right-0 bg-red-400 text-white p-2 hover:bg-red-300 hover:rounded-bl-xl" id="favorite-delete-btn" value="${index}"><i class="fa-solid fa-trash"></i></button>
             </a>
         `
     }).join('')
@@ -94,10 +106,10 @@ function displayStats(num1, num2, num3){
 }
 
 const filterButtonsContainer = document.querySelectorAll('#filter-btn')
+const xButton = document.getElementById('x-btn')
 
 filterButtonsContainer.forEach(button => {
     button.addEventListener('click', () => {
-        //update the state
         favoritesFilter = button.value
         //filter array and display new array
         const filteredArray = tempArray.filter(favorite => favorite.type === favoritesFilter)
@@ -105,14 +117,30 @@ filterButtonsContainer.forEach(button => {
 
         //set all bg colors to default color
         filterButtonsContainer.forEach(button => {
-            button.classList.remove('bg-blue-400')
-            button.classList.add('bg-blue-300')
+            button.className = 'bg-yellow-400 p-2 rounded-xl text-white font-semibold hover:bg-yellow-300'
         })
+
+        //make x button appear if filter clicked
+        if(favoritesFilter.length > 0){
+            xButton.classList.remove('hidden')
+        }
         
         //change bg colors of buttons
-        button.classList.remove('bg-blue-300')
-        button.classList.add('bg-blue-400')
+        button.className = 'bg-yellow-600 p-2 rounded-xl text-white font-semibold hover:bg-yellow-300'
     })
+})
+
+xButton.addEventListener('click', () => {
+    favoritesFilter = ''
+    displayFavorites(tempArray)
+
+    //set all bg colors to default color
+    filterButtonsContainer.forEach(button => {
+        button.className = 'bg-yellow-400 p-2 rounded-xl text-white font-semibold hover:bg-yellow-300'
+    })
+
+    //make x button disappear
+    xButton.classList.add('hidden')
 })
 
 async function removeItemFromFavorites(index){
