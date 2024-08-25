@@ -57,14 +57,7 @@ const getTrendingData = async () => {
     }
 }
 
-import {dayTrendingData, weekTrendingData} from './data/trendingData.js';
-const newResults2 = await getPredisplayData(dayTrendingData.results)
-displayTrending(newResults2)
-tempTrendingData = dayTrendingData.results
-setBackdropImage(dayTrendingData.results)
-// if(trendingWrapper.childNodes.length === 0){
-//     getTrendingData()
-// }
+getTrendingData()
 
 //trending cards can be movies, tv shows, and people
 function displayTrending(results) {
@@ -142,8 +135,8 @@ if(trendingFilter === 'day'){
 weekButton.addEventListener('click', () => {
     trendingFilter = 'week'
     //update data
-    displayTrending(weekTrendingData.results)
-    // getTrendingData()
+    
+    getTrendingData()
 
     todayButton.className = 'p-1 px-2 rounded-full'
     weekButton.className = 'p-1 px-2 rounded-full bg-purple-700 text-white'
@@ -152,8 +145,8 @@ weekButton.addEventListener('click', () => {
 todayButton.addEventListener('click', () => {
     trendingFilter = 'day'
     //update data
-    displayTrending(dayTrendingData.results)
-    // getTrendingData()
+    
+    getTrendingData()
 
     weekButton.className = 'p-1 px-2 rounded-full'
     todayButton.className = 'p-1 px-2 rounded-full bg-purple-700 text-white'
@@ -181,11 +174,7 @@ const getPopularData = async () => {
     }
 }
 
-import { popularMovieData, popularTvData, popularPeopleData } from './data/popularData.js';
-const newResults = await getPredisplayData(popularMovieData.results)
-displayPopular(newResults)
-tempPopularData = popularMovieData.results
-//getPopularData()
+getPopularData()
 
 //popular cards
 function displayPopular(results) {
@@ -264,7 +253,6 @@ if(popularFilter === 'movie'){
 tvButton.addEventListener('click', () => {
     popularFilter = 'tv'
 
-    // displayPopular(popularTvData.results)
     getPopularData()
 
     movieButton.className = 'p-1 px-2 rounded-full'
@@ -275,7 +263,6 @@ tvButton.addEventListener('click', () => {
 peopleButton.addEventListener('click', () => {
     popularFilter = 'person'
 
-    // displayPopular(popularPeopleData.results)
     getPopularData()
 
     movieButton.className = 'p-1 px-2 rounded-full'
@@ -286,7 +273,6 @@ peopleButton.addEventListener('click', () => {
 movieButton.addEventListener('click', () => {
     popularFilter = 'movie'
 
-    // displayPopular(popularMovieData.results)
     getPopularData()
 
     tvButton.className = 'p-1 px-2 rounded-full'
